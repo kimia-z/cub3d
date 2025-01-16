@@ -1,0 +1,1 @@
+cub3D is a project inspired by the iconic Wolfenstein 3D, which pioneered the first-person shooter genre. This project implements a simplified 3D rendering engine using ray-casting and explores the mathematical and programming techniques involved in creating a first-person perspective inside a maze.
