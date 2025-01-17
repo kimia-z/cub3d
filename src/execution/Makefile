@@ -24,7 +24,7 @@ FLAGSMLX = -ldl -lglfw -pthread -lm
 
 OBJ_DIR = obj
 
-SOURCE = main.c
+SOURCE = main.c execution.c
 
 OBJECTS = $(SOURCE:%.c=$(OBJ_DIR)/%.o)
 

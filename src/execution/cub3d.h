@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include "../../libft/libft.h"
-# include <MLX42/MLX42.h>
+# include "./MLX42/MLX42.h"
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -29,11 +29,17 @@
 
 typedef struct	s_data
 {
+	float posX; // player position
+	float posY; // player position
+	float dirX; // Ray direction
+	float dirY; // Ray direction
 	//char **map;
 	//t_mlx	*mlx;
 	//player starting position(px,py)
 	//ray direction(dirx,diry)
 	//grid coordinates of the player(mapx,mapy)
 }	t_data;
+
+void	execution(t_data *data);
 
 #endif

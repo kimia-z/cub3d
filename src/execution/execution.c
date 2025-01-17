@@ -10,7 +10,16 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+	11111
+	10001
+	10N01
+	10001
+	11111
+*/
+
 #include "cub3d.h"
+
 
 /*
 	1.Map parsing and validating (done)
@@ -19,13 +28,22 @@
 	4.Player movement(loop 2.Casting the rays and 3.Rendering the walls)
 */
 
+void	ray_casting(t_data *data)
+{
+	// float mapX = 2;
+	// float mapY = 2;
+	// float stepX = 1;
+	// float stepY = 1;
+	// float side_dist_x = ((mapX + stepX) - data->posX) * 
+}
+
 void	press_key()
 {}
 
 void	render()
 {}
 
-void	start_game(t_data *data)
+void	execution(t_data *data)
 {
 	/*
 		1.initialize mlx
@@ -38,43 +56,47 @@ void	start_game(t_data *data)
 	*/
 	// t_mlx	*mlx;
 	mlx_t	*mlx_p;
-	
+	data->posX = 2.5;
+	data->posY = 2.5;
+	data->dirX = 1;
+	data->dirY = 0.5;
 
-	mlx_p = mlx_init(WIDTH, HEIGHT, "cub3d", RESIZE);
-	if (mlx_p == NULL)
-	{
-		//error, free, exit
-	}
-	if (!load_texture())
-	{
-		//error, free, exit
-	}
-	if (!get_angel())
-	{
-		//error, free, exit
-	}
 
-	/*
-		This function sets the key callback, which is called when a
-		key is pressed on the keyboard. Useful for single keypress detection.
-	*/
-	mlx_key_hook(mlx_p, press_key, data);
+	mlx_p = mlx_init(WIDTH, HEIGHT, "cub3d", false);
+	// if (mlx_p == NULL)
+	// {
+	// 	//error, free, exit
+	// }
+	// if (!load_texture())
+	// {
+	// 	//error, free, exit
+	// }
+	// if (!get_angel())
+	// {
+	// 	//error, free, exit
+	// }
 
-	/*
-		Generic loop hook for any custom hooks to add to the main loop.
-		Executes a function per frame, so be careful.
-	*/
-	if (!mlx_loop_hook(mlx_p, render, data))
-	{
-		//error, free, exit
-	}
+	// /*
+	// 	This function sets the key callback, which is called when a
+	// 	key is pressed on the keyboard. Useful for single keypress detection.
+	// */
+	// mlx_key_hook(mlx_p, press_key, data);
 
-	/*
-		Initializes the rendering of MLX, this function won't return
-		until mlx_close_window is called, meaning it will loop until
-		the user requests that the window should close.
-	*/
-	mlx_loop(mlx_p);
-	
-	ft_exit();
+	// /*
+	// 	Generic loop hook for any custom hooks to add to the main loop.
+	// 	Executes a function per frame, so be careful.
+	// */
+	// if (!mlx_loop_hook(mlx_p, render, data))
+	// {
+	// 	//error, free, exit
+	// }
+
+	// /*
+	// 	Initializes the rendering of MLX, this function won't return
+	// 	until mlx_close_window is called, meaning it will loop until
+	// 	the user requests that the window should close.
+	// */
+	// mlx_loop(mlx_p);
+
+	// //ft_exit();
 }

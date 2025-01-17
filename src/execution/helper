@@ -1,0 +1,52 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+****************MLX***********
+-------------------------------------------------------------------------------
+	/*
+		This function sets the key callback, which is called when a
+		key is pressed on the keyboard. Useful for single keypress detection.
+	*/
+	mlx_key_hook(mlx_p, press_key, data);
+-------------------------------------------------------------------------------
+	/*
+		Generic loop hook for any custom hooks to add to the main loop.
+		Executes a function per frame, so be careful.
+	*/
+	if (!mlx_loop_hook(mlx_p, render, data))
+	{
+		//error, free, exit
+	}
+-------------------------------------------------------------------------------
+	/*
+		Initializes the rendering of MLX, this function won't return
+		until mlx_close_window is called, meaning it will loop until
+		the user requests that the window should close.
+	*/
+	mlx_loop(mlx_p);
+-------------------------------------------------------------------------------
+	/*
+		void mlx_delete_image(mlx_t *mlx, mlx_image_t *image)
+		Deleting an image will remove it from the render queue as well as any and 
+		all instances it might have. Additionally, just as extra measures sets all the data to NULL.
+		If you simply wish to stop rendering an image without de-allocation
+		set the 'enabled' boolean in the image struct.
+	*/
+	mlx_delete_image();
+-------------------------------------------------------------------------------
+	/*
+		void mlx_delete_texture(mlx_texture_t *texture)
+		Deletes a texture by freeing its allocated data.
+	*/
+	mlx_delete_texture(mlx_texture_t *texture);

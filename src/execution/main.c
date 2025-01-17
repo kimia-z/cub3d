@@ -12,12 +12,12 @@
 
 #include "cub3d.h"
 
-int	main(int argc, char **argv)
+int	main()
 {
-	t_data	*data;
+	t_data	*data = NULL;
 
 	//initialize_map(data);
-	start_game(data);
+	execution(data);
 	return (0);
 }
 
