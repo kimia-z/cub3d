@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   parse_file.c                                       :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
+/*   Updated: 2025/01/20 15:53:56 by rshaheen      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../cub3d.h"
 
 char	*skip_space(char *str)
@@ -32,27 +44,27 @@ int	fill_texture(t_game_config *data, char *line)
 {
 	if (ft_strncmp(line, "NO", 2) == 0)
 	{
-		if (data->NO != NULL)
-			return (error_msg("Duplicate texture definition for North"), 1);
-		data->NO = skip_space(line);
+		if (data->no != NULL)
+			return (error_msg("Duplicate texture definition: North"), 1);
+		data->no = skip_space(line);
 	}
 	if (ft_strncmp(line, "WE", 2) == 0)
 	{
-		if (data->WE != NULL)
-			return (error_msg("Duplicate texture definition for West"), 1);
-		data->WE = skip_space(line);
+		if (data->we != NULL)
+			return (error_msg("Duplicate texture definition: West"), 1);
+		data->we = skip_space(line);
 	}
 	else if (ft_strncmp(line, "SO", 2) == 0)
 	{
-		if (data->SO != NULL)
-			return (error_msg("Duplicate texture definition for South"), 1);
-		data->SO = skip_space(line);
+		if (data->so != NULL)
+			return (error_msg("Duplicate texture definition: South"), 1);
+		data->so = skip_space(line);
 	}
 	else if (ft_strncmp(line, "EA", 2) == 0)
 	{
-		if (data->EA != NULL)
-			return (error_msg("Duplicate texture definition for East"), 1);
-		data->EA = skip_space(line);
+		if (data->ea != NULL)
+			return (error_msg("Duplicate texture definition: East"), 1);
+		data->ea = skip_space(line);
 	}
 	return (0);
 }
@@ -62,13 +74,13 @@ int	fill_color(t_game_config *data, char *line)
 	if (ft_strncmp(line, "F", 1) == 0)
 	{
 		if (data->floor_color != NULL)
-			return (error_msg("Floor color already defined, cannot redefine."), 1);
+			return (error_msg("Duplicate color definition: floor\n"), 1);
 		data->floor_color = ft_strdup(line);
 	}
 	else if (ft_strncmp(line, "C", 1) == 0)
 	{
 		if (data->ceiling_color != NULL)
-			return (error_msg("Ceiling color already defined, cannot redefine."), 1);
+			return (error_msg("Duplicate color definition; ceiling\n"), 1);
 		data->ceiling_color = ft_strdup(line);
 	}
 	return (0);
