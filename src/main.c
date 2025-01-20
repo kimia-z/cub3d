@@ -17,6 +17,8 @@
 int	main(int argc, char **argv)
 {
 
+	t_game_config	*data;
+
 	if (argc < 2)
 	{
 		printf("Please input one gaming map\n");
@@ -29,5 +31,7 @@ int	main(int argc, char **argv)
 	}
 	if (check_file_extension(argv[1]) == false)
 		return (1);
-
+	init_config(data);
+	if (parse_file(argv[1], data) == false)
+		//clean file and exit here
 }
