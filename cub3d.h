@@ -16,7 +16,23 @@
 # include "libft/libft.h"
 # include <stdbool.h>
 
+typedef struct s_game_config
+{
+	//char	**mapa;
+	char	*NO;
+	char	*SO;
+	char	*WE;
+	char	*EA;
+	char	*floor_color;
+	char	*ceiling_color;
+	int		start;
+	//t_tex	*valid_tex;
+	//t_map	*map;
+}	t_game_config;
+
 bool	check_file_extension(char *str);
+
+void	error_msg(char *message);
 
 
 #endif
