@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 12:19:30 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/20 19:08:27 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/21 19:28:36 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ void	print_my_struct(t_game_config *data)
 	printf("east texture: %s\n", data->ea);
 	printf("north texture: %s\n", data->no);
 	printf("south texture: %s\n", data->so);
-	printf("%s\n", data->we);
-	printf("%s\n", data->start);
+	printf("west texture: %s\n", data->we);
+	printf("pre_start_line_num: %d\n", data->map->pre_start_line_num);
+	printf("map_height: %d\n", data->map->height);
 }
 
 
 
 int	main(int argc, char **argv)
 {
-
-	t_game_config	*data;
+	t_game_config	data;
 
 	if (argc < 2)
 	{
@@ -44,11 +44,20 @@ int	main(int argc, char **argv)
 	}
 	if (check_file_extension(argv[1]) == false)
 		return (1);
-	init_config(data);
-	print_my_struct(data);
-	parse_file(argv[1], data);
-	print_my_struct(data);
+	init_config(&data);
+	parse_file(argv[1], &data);
 	//if (parse_file(argv[1], data) == false)
 		//clean file and exit here
+	parse_texture_n_color(&data);
+	// if (parse_texture_n_color(&data) == false)
+	// 	return (cleaner_file(&input), 1);
+	//validate_game_config(argv[1], &data);
+	//if (validate_game_config(argv[1], &input) == false)
+		//return (cleaner_file(&input), 1);
+	print_my_struct(&data);
+
 }
 
+//TODO: add the if condition when parse_file is false
+//TODO:add the if condition when parse_texture_n_color is false
+//TODO: add the if codition when validate_game_config is false

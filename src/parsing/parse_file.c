@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/20 15:53:56 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/21 18:37:39 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,12 @@ int	fill_information(t_game_config *data, char *line)
 		return (1);
 	return (0);
 }
+// Opens the file and reads it line by line using get_next_line.
+// Processes each line to fill game configuration data (textures, colors, etc.).
+// Identifies and processes map lines, initializing map data if required.
+// Ensures all lines are parsed before calculating the map's height.
+// get_next_line returns NULL at EOF, ensuring no partial height calculation.
+// Closes the file descriptor after processing all lines.
 
 int	parse_file(char *file, t_game_config *data)
 {
@@ -109,20 +115,20 @@ int	parse_file(char *file, t_game_config *data)
 		return (error_msg("File read failed\n"), -1);
 	current_line = get_next_line(fd);
 	if (current_line == NULL)
-		return (error_message("get_next_line failed\n"), -1);
+		return (error_msg("get_next_line failed\n"), -1);
 	while (current_line != NULL)
 	{
 		if (fill_information(data, current_line) != 0)
 			return (free(current_line), -1);
-		// is_map(current_line, line_num, data);
-		// free(current_line);
-		// line_num++;
-		// current_line = get_next_line(fd);
+		parse_map_line(current_line, line_num, data);
+		free(current_line);
+		line_num++;
+		current_line = get_next_line(fd);
 	}
-	// free(current_line);
-	// if (data->map)
-	// 	data->map->h_map = line_num - data->map->start_y;
-	// return (close(fd));
+	free(current_line);
+	if (data->map)
+		data->map->height = line_num - data->map->pre_start_line_num;
+	return (close(fd));
 }
 
 

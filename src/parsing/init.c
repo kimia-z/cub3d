@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:52 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/20 15:19:38 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/21 19:07:07 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ void	init_config(t_game_config *data)
 	data->ea = NULL;
 	data->floor_color = NULL;
 	data->ceiling_color = NULL;
-	//data->valid_tex = NULL;
-	//data->map = NULL;
+	data->valid_texture = NULL;
+	data->map = NULL;
 }

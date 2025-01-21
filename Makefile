@@ -6,7 +6,7 @@
 #    By: rshaheen <rshaheen@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2025/01/15 12:10:13 by rshaheen      #+#    #+#                  #
-#    Updated: 2025/01/15 14:57:18 by rshaheen      ########   odam.nl          #
+#    Updated: 2025/01/21 17:40:50 by rshaheen      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,12 @@ FLAGSMLX = -ldl -lglfw -pthread -lm
 OBJ_DIR = obj
 
 SOURCE = src/main.c\
-			src/parsing/check_file.c\
+		src/error_msg.c \
+			src/parsing/check_file_ext.c \
+			src/parsing/init.c \
+			src/parsing/parse_file.c \
+			src/parsing/parse_map_line.c \
+			
 
 OBJECTS = $(SOURCE:%.c=$(OBJ_DIR)/%.o)
 
