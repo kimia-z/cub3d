@@ -24,6 +24,9 @@ void	print_my_struct(t_game_config *data)
 	printf("west texture: %s\n", data->we);
 	printf("pre_start_line_num: %d\n", data->map->pre_start_line_num);
 	printf("map_height: %d\n", data->map->height);
+	printf("floor rgb: %u\n", data->valid_texture->floor);
+	printf("ceiling rgb: %u\n", data->valid_texture->ceiling);
+
 }
 
 
@@ -51,7 +54,7 @@ int	main(int argc, char **argv)
 	parse_texture_n_color(&data);
 	// if (parse_texture_n_color(&data) == false)
 	// 	return (cleaner_file(&input), 1);
-	//validate_game_config(argv[1], &data);
+	validate_game_config(argv[1], &data);
 	//if (validate_game_config(argv[1], &input) == false)
 		//return (cleaner_file(&input), 1);
 	print_my_struct(&data);
@@ -61,3 +64,4 @@ int	main(int argc, char **argv)
 //TODO: add the if condition when parse_file is false
 //TODO:add the if condition when parse_texture_n_color is false
 //TODO: add the if codition when validate_game_config is false
+//TODO: test printing color and texture

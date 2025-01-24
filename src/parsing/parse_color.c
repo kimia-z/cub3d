@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../../cub3d.h"
 
-size_t	ft_arrlen(char **arr)
+size_t	count_arr_elements(char **arr)
 {
 	size_t	i;
 
@@ -24,12 +24,26 @@ size_t	ft_arrlen(char **arr)
 	return (i);
 }
 
+//get_rgb COMBINES the individual RGB (Red, Green, Blue) values 
+//and the alpha (opacity) value into a single 32-bit integer.
+//Left shifting a number n by m bits (n << m) means multiplying n by 2^m.
+//because every number needs to be specifically positioned in a 32-bit number
+//The | (bitwise OR) operator combines all the shifted values into a single 32-bit number.
+
+// 32-bit number is represented using 32 binary digits (bits), 
+//where each bit can be either 0 or 1. can be signed or unsigned.
+//32-bit binary number: 11010110101110101011010111110001(32 digits)
+//Hexadecimal representation: This is often used for easier reading and compactness. 
+//The binary number above would be represented as 0xDAB5F1F1 in hexadecimal.
+
+
+
 static int	get_rgb(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-int	get_colors(t_file *valid_file, char **color, char **word)
+int	get_colors(t_game_config *data, char **color_numbers, char **line_elements)
 {
 	int		i;
 	int		number;
@@ -37,44 +51,55 @@ int	get_colors(t_file *valid_file, char **color, char **word)
 	int32_t	rgb;
 
 	i = 0;
-	while (color[i])
+	while (color_numbers[i])
 	{
-		number = ft_atoi(color[i]);
+		number = ft_atoi(color_numbers[i]);
 		if (number < 0 || number > 255)
-			return (error_message("Wrong color selection"), 1);
+			return (error_msg("RGB values must be 0-255."), 1);
 		arg[i] = number;
 		i++;
 	}
 	rgb = get_rgb(arg[0], arg[1], arg[2], 255);
-	if (!ft_strcmp(word[0], "F"))
-		valid_file->valid_tex->floor = rgb;
-	else if (!ft_strcmp(word[0], "C"))
-		valid_file->valid_tex->ceil = rgb;
+	if (!ft_strcmp(line_elements[0], "F"))
+		data->valid_texture->floor = rgb;
+	else if (!ft_strcmp(line_elements[0], "C"))
+		data->valid_texture->ceiling = rgb;
 	return (EXIT_SUCCESS);
 }
 
-int	parse_color(t_game_config *valid_file, char *word)
+//parse_color receives one color line at a time from the map
+//replace tabs with spaces for simplification
+//split the string at space
+//must be only 2 elements in the array:
+//element one: (name of the 'to be painted' area i. e. floor or ceiling)
+//element 2: (the rgb values for colors)
+//split rgb values at ','; must be 3 
+
+int	parse_color(t_game_config *data, char *color_line)
 {
 	int		i;
-	char	**color;
-	char	**line;
+	char	**color_numbers;
+	char	**line_elements;
 
 	i = 0;
-	if (!word)
-		return (error_message("missing color"), 0);
-	while (word[i] == '\t')
-		word[i++] = ' ';
-	word[ft_strlen(word)] = '\0';
-	line = ft_split(word, ' ');
-	if (ft_arrlen(line) != 2)
-		return (free_split(line), error_message("Wrong color selection"), 0);
-	color = ft_split(line[1], ',');
-	if (ft_arrlen(color) != 3)
-		return (free_split(color), error_message("Wrong color selection"), 0);
-	if (!get_colors(valid_file, color, line))
-		return (free_split(color), free_split(line), 1);
-	free_split(color);
-	free_split(line);
+	if (!color_line)
+		return (error_msg("missing color string"), 0);
+	while (color_line[i] == '\t')
+		color_line[i++] = ' ';
+	color_line[ft_strlen(color_line)] = '\0';
+	line_elements = ft_split(color_line, ' ');
+	if (count_arr_elements(line_elements) != 2)
+		return (free_split(line_elements), error_msg("Invalid color format\n"), 0);
+	color_numbers = ft_split(line_elements[1], ',');
+	if (count_arr_elements(color_numbers) != 3)
+		return (free_split(color_numbers), error_msg("Invalid color_numbers format\n"), 0);
+	if (!get_colors(data, color_numbers, line_elements))
+		return (free_split(color_numbers), free_split(line_elements), 1);
+	free_split(color_numbers);
+	free_split(line_elements);
 	return (0);
 }
+
+//TODO: consider returning 1 when error
+
 

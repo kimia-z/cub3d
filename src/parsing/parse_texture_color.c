@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../../cub3d.h"
 
 bool	init_texture_struct(t_game_config *data)
 {
@@ -48,13 +48,13 @@ bool	assign_texture(t_game_config *data)
 		return (error_msg("texture loading failed: north"), false);
 	data->valid_texture->so = mlx_load_png(data->so);
 	if (!data->valid_texture->so)
-		return (error_message("texture loading failed: south"), false);
+		return (error_msg("texture loading failed: south"), false);
 	data->valid_texture->we = mlx_load_png(data->we);
 	if (!data->valid_texture->we)
-		return (error_message("texture loading failed: west"), false);
+		return (error_msg("texture loading failed: west"), false);
 	data->valid_texture->ea = mlx_load_png(data->ea);
 	if (!data->valid_texture->ea)
-		return (error_message("texture loading failed: east"), false);
+		return (error_msg("texture loading failed: east"), false);
 	return (true);
 }
 

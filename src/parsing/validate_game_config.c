@@ -12,12 +12,17 @@
 
 #include "../../cub3d.h"
 
+int	is_config_full(t_game_config *data)
+{
+	return (data->ceiling_color && data->floor_color
+		&& data->ea && data->we && data->so && data->no);
+}
 
 bool	validate_game_config(char *argv, t_game_config *data)
 {
 	
-	// if (is_full(data) == false)
-	// 	return (error_message("Missing elements"), false);
+	if (is_config_full(data) == false)
+		return (error_msg("Missing config info"), false);
 	// if (is_map_filled(argv, data) == false)
 	// 	return (false);
 	// if (find_player(data) == false)
