@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   init.c                                             :+:    :+:            */
+/*   ft_strcmp.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/01/20 15:06:52 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/24 12:30:29 by rshaheen      ########   odam.nl         */
+/*   Created: 2025/01/24 14:07:21 by rshaheen      #+#    #+#                 */
+/*   Updated: 2025/01/24 14:07:39 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "libft.h"
 
-void	init_config(t_game_config *data)
+int	ft_strcmp(char *s1, char *s2)
 {
-	//data->mapa = NULL;
-	data->no = NULL;
-	data->so = NULL;
-	data->we = NULL;
-	data->ea = NULL;
-	data->floor_color = NULL;
-	data->ceiling_color = NULL;
-	data->valid_texture = NULL;
-	data->map = NULL;
+	size_t	i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	return (s1[i] - s2[i]);
 }

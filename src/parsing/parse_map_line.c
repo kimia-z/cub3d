@@ -6,11 +6,11 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 16:27:28 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/21 18:39:33 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/24 12:30:42 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 //parse_map_line verifies if a line in the .cub file is a valid map line
 //Ensures lines only contain valid characters (0-9, N, S, E, W).

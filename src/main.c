@@ -6,11 +6,11 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 12:19:30 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/21 19:28:36 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/24 14:40:04 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../cub3d.h"
+#include "cub3d.h"
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -24,10 +24,12 @@ void	print_my_struct(t_game_config *data)
 	printf("west texture: %s\n", data->we);
 	printf("pre_start_line_num: %d\n", data->map->pre_start_line_num);
 	printf("map_height: %d\n", data->map->height);
-	printf("floor rgb: %u\n", data->valid_texture->floor);
-	printf("ceiling rgb: %u\n", data->valid_texture->ceiling);
-
+	printf("Floor color as decimal: %u\n", data->valid_texture->floor);
+	printf("Floor color as hexadecimal: %#X\n", data->valid_texture->floor);
+	printf("Ceiling color as decimal: %u\n", data->valid_texture->ceiling);
+	printf("Ceiling color as hexadecimal: %#X\n", data->valid_texture->ceiling);
 }
+
 
 
 
@@ -54,11 +56,10 @@ int	main(int argc, char **argv)
 	parse_texture_n_color(&data);
 	// if (parse_texture_n_color(&data) == false)
 	// 	return (cleaner_file(&input), 1);
-	validate_game_config(argv[1], &data);
+	//validate_game_config(argv[1], &data);
 	//if (validate_game_config(argv[1], &input) == false)
 		//return (cleaner_file(&input), 1);
 	print_my_struct(&data);
-
 }
 
 //TODO: add the if condition when parse_file is false

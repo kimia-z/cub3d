@@ -6,11 +6,11 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:07:21 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/20 15:07:24 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/24 12:28:05 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 #include <stdbool.h>
 
 bool	check_file_extension(char *str)

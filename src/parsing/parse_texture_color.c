@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../cub3d.h"
+#include "../cub3d.h"
 
 bool	init_texture_struct(t_game_config *data)
 {
@@ -61,7 +61,7 @@ bool	assign_texture(t_game_config *data)
 bool	parse_texture_n_color(t_game_config *data)
 {
 	if (is_texture_valid(data) == false)
-		return (error_message("invalid texture"), false);
+		return (error_msg("invalid texture"), false);
 	if (assign_texture(data) == false)
 		return (false);
 	if (parse_color(data, data->ceiling_color) == false

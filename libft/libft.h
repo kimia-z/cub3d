@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/22 19:21:02 by rshaheen      #+#    #+#                 */
-/*   Updated: 2024/04/26 18:47:47 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/24 14:09:39 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int				ft_atoi(const char *nptr);
 char			*ft_itoa(int n);
 char			**ft_split(char const *s, char c);
 char			*ft_strchr(const char *s, int c);
+int				ft_strcmp(char *s1, char *s2);
 char			*ft_strdup(char const *s);
 void			ft_striteri(char *s, void (*f)(unsigned int, char*));
 char			*ft_strjoin(char const *s1, char const *s2);
