@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 12:19:30 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/24 14:40:04 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/24 16:21:30 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ void	print_my_struct(t_game_config *data)
 	printf("Floor color as hexadecimal: %#X\n", data->valid_texture->floor);
 	printf("Ceiling color as decimal: %u\n", data->valid_texture->ceiling);
 	printf("Ceiling color as hexadecimal: %#X\n", data->valid_texture->ceiling);
+	for (int i = 0; i < data->map->height - 1; i++) 
+    	printf("map2d[%d]: %s\n", i, data->map->map2d[i]);
+
 }
 
 
@@ -56,7 +59,7 @@ int	main(int argc, char **argv)
 	parse_texture_n_color(&data);
 	// if (parse_texture_n_color(&data) == false)
 	// 	return (cleaner_file(&input), 1);
-	//validate_game_config(argv[1], &data);
+	validate_game_config(argv[1], &data);
 	//if (validate_game_config(argv[1], &input) == false)
 		//return (cleaner_file(&input), 1);
 	print_my_struct(&data);

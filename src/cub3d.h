@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 11:54:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/24 14:27:42 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/24 16:11:50 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int		parse_color(t_game_config *data, char *color_line);
 bool	parse_map_line(char *current_line, int line_num, t_game_config *data);
 bool	parse_texture_n_color(t_game_config *data);
 bool	validate_game_config(char *argv, t_game_config *data);
+bool	validate_n_store_map2d(char *map_file, t_game_config *data);
 
 void	error_msg(char *message);
 
