@@ -6,7 +6,7 @@
 #    By: rshaheen <rshaheen@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2025/01/15 12:10:13 by rshaheen      #+#    #+#                  #
-#    Updated: 2025/01/24 16:12:29 by rshaheen      ########   odam.nl          #
+#    Updated: 2025/01/24 17:14:13 by rshaheen      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SOURCE = src/main.c\
 			src/parsing/check_file_ext.c\
 			src/parsing/init.c\
 			src/parsing/parse_color.c\
+			src/parsing/parse_player.c\
 			src/parsing/parse_file.c\
 			src/parsing/parse_map_line.c\
 			src/parsing/parse_texture_color.c\

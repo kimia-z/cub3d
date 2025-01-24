@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 11:54:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/24 16:11:50 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/24 17:13:11 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
 typedef struct s_map
 {
 	char	**map2d;
-	// char	facing_to;
+	char	player_facing_to;
 	int		pre_start_line_num;
-	// int		p_x;
-	// int		p_y;
-	//int		map_weidth;
+	int		player_x;//column
+	int		player_y;//row
+	int		map_weidth;
 	int		height;
 }	t_map;
 
@@ -47,7 +47,7 @@ typedef struct s_game_config
 	char		*ea;
 	char		*floor_color;
 	char		*ceiling_color;
-	//int		start;
+	int			map_start_row;
 	t_texture	*valid_texture;
 	t_map		*map;
 }	t_game_config;
@@ -60,6 +60,7 @@ bool	parse_map_line(char *current_line, int line_num, t_game_config *data);
 bool	parse_texture_n_color(t_game_config *data);
 bool	validate_game_config(char *argv, t_game_config *data);
 bool	validate_n_store_map2d(char *map_file, t_game_config *data);
+bool	parse_player(t_game_config *data);
 
 void	error_msg(char *message);
 

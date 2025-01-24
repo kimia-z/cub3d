@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/24 15:56:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/24 16:11:39 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/24 16:26:02 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ bool	validate_n_store_map2d(char *map_file, t_game_config *data)
 		if (!temp)
 			break ;
 		if (is_valid_char(temp))
-			return (error_msg("invalid character"), free(temp), false);
+			return (error_msg("invalid character in map"), free(temp), false);
 		data->map->map2d[i++] = ft_strtrim(temp, "\n");
 		free(temp);
 	}
