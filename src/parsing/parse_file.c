@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/24 16:00:21 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/27 17:05:25 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int	parse_file(char *file, t_game_config *data)
 	line_num = 0;
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		return (error_msg("open file failed\n"), -1);
+		return (error_msg("cannot open file\n"), -1);
 	current_line = get_next_line(fd);
 	if (current_line == NULL)
 		return (error_msg("get_next_line failed\n"), -1);

@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 16:27:28 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/24 17:04:27 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/27 13:24:44 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,6 @@
 //Handles whitespace by trimming the line.
 //Initializes the data->map structure if it's not already allocated and 
 //sets the (pre_start_line_num) to the current line number
-
-
-char	is_player_dir(char c)
-{
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		return (c);
-	return (0);
-}
 
 bool	parse_map_line(char *current_line, int line_num, t_game_config *data)
 {
@@ -46,5 +38,3 @@ bool	parse_map_line(char *current_line, int line_num, t_game_config *data)
 	}
 	return (free(temp), true);
 }
-
-

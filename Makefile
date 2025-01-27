@@ -6,7 +6,7 @@
 #    By: rshaheen <rshaheen@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2025/01/15 12:10:13 by rshaheen      #+#    #+#                  #
-#    Updated: 2025/01/24 17:14:13 by rshaheen      ########   odam.nl          #
+#    Updated: 2025/01/27 16:43:52 by rshaheen      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ OBJ_DIR = obj
 
 SOURCE = src/main.c\
 		src/error_msg.c\
+		src/clean.c\
 			src/parsing/check_file_ext.c\
 			src/parsing/init.c\
 			src/parsing/parse_color.c\

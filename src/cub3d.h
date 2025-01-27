@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 11:54:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/24 17:13:11 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/27 16:53:03 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ typedef struct s_game_config
 	char		*ea;
 	char		*floor_color;
 	char		*ceiling_color;
-	int			map_start_row;
+	int			first_non_empty_row;
 	t_texture	*valid_texture;
 	t_map		*map;
 }	t_game_config;
@@ -61,8 +61,12 @@ bool	parse_texture_n_color(t_game_config *data);
 bool	validate_game_config(char *argv, t_game_config *data);
 bool	validate_n_store_map2d(char *map_file, t_game_config *data);
 bool	parse_player(t_game_config *data);
+char	is_player_dir(char c);
 
 void	error_msg(char *message);
+
+void	clean_all(t_game_config *data);
+void	free_array(char **array);
 
 
 #endif
