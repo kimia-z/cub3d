@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 11:54:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/27 16:53:03 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/28 13:55:31 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ void	error_msg(char *message);
 
 void	clean_all(t_game_config *data);
 void	free_array(char **array);
+
+//debugging
+void	print_my_map(t_map *map);
 
 
 #endif

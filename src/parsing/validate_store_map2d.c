@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/24 15:56:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/27 16:27:52 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/28 14:00:55 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ bool	validate_n_store_map2d(char *map_file, t_game_config *data)
 	i = 0;
 	fd = open(map_file, O_RDONLY);
 	if (fd == -1)
-		return (error_msg("open file failed"), false);
+		return (error_msg("cannot open file"), false);
 	temp = NULL;
 	skip_to_map_start(data, temp, i, fd);
 	i = 0;
