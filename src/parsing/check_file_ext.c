@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   cub3d.h                                            :+:    :+:            */
+/*   check_file_ext.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2025/01/15 11:54:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/15 14:56:40 by rshaheen      ########   odam.nl         */
+/*   Created: 2025/01/20 15:07:21 by rshaheen      #+#    #+#                 */
+/*   Updated: 2025/01/24 12:28:05 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CUB3D_H
-# define CUB3D_H
+#include "../cub3d.h"
+#include <stdbool.h>
 
-# include "libft/libft.h"
-# include <stdbool.h>
+bool	check_file_extension(char *str)
+{
+	int	len;
 
-bool	check_file_extension(char *str);
-
-
-#endif
+	len = ft_strlen(str);
+	if (str && ft_strncmp(&str[len - 4], ".cub", 4) != 0)
+	{
+		write(2, "Error: wrong file extension. Please use file.cub\n", 49);
+		return (false);
+	}
+	return (true);
+}
