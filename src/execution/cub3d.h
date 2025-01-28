@@ -21,6 +21,8 @@
 # define WIDTH 1000 //?
 # define HEIGHT 1900 //?
 # define RESIZE 5 //?
+# define X 0
+# define Y 1
 /*
 	Delta distances represent the distance the ray
 		has to travel to move one unit in the X or Y direction
@@ -39,6 +41,16 @@ typedef struct	s_data
 	//ray direction(dirx,diry)
 	//grid coordinates of the player(mapx,mapy)
 }	t_data;
+
+typedef struct s_ray
+{
+	int	pos[2];
+	int	step[2];
+	int	final_dest;
+	int	length[2];
+	int step_size[2];
+
+}	t_ray;
 
 void	execution(t_data *data);
 

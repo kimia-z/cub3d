@@ -28,13 +28,46 @@
 	4.Player movement(loop 2.Casting the rays and 3.Rendering the walls)
 */
 
-void	ray_casting(t_data *data)
+int	calculate_step_size(t_ray *ray, char c)
 {
-	// float mapX = 2;
-	// float mapY = 2;
-	// float stepX = 1;
-	// float stepY = 1;
-	// float side_dist_x = ((mapX + stepX) - data->posX) * 
+	float	delta_x;
+	float	m;
+
+	m = ray->pos[Y] / ray->pos[X];
+	if (c = 'X')
+	{
+		delta_x = sqrt(1 + (ray->pos[Y] * ray->pos[Y]));
+	}
+	else if (c = 'Y')
+	{
+
+	}
+}
+
+void	ray_caster_step(t_data *data, t_ray *ray)
+{
+	int	step[2];
+
+	/*
+		we should know the direction of the ray
+		step[0] = 1;
+		step[1] = 0;
+	*/
+	while(/*hit the wall*/)
+	{
+		if(ray->length[X] < ray->length[Y])
+		{
+			ray->pos[X] += ray->step[X];
+			ray->final_dest = ray->length;
+			ray->length += calculate_step_size(ray,'X');
+
+		}
+		else if(ray->length[Y] < ray->length[X])
+		{
+
+		}
+		/*else?*/
+	}
 }
 
 void	press_key()
