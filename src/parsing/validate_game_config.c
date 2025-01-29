@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 18:51:09 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/28 15:24:11 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/29 12:25:14 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,37 @@ int	is_config_full(t_game_config *data)
 		return (error_msg("missing north texture\n"), false);
 	return (true);
 }
+
+t_map	*copy_map(t_map *map)
+{
+	t_map	*temp_map;
+	int		i;
+
+	i = -1;
+	temp_map = malloc(sizeof(t_map));
+	if (!temp_map)
+		return (error_msg("allocation for copy_map failed\n"), NULL);
+	temp_map->height = map->height;
+	temp_map->width = map->width;
+	temp_map->player_x = map->player_x;
+	temp_map->player_y = map->player_y;
+	temp_map->player_facing_to = map->player_facing_to;
+	temp_map->map2d = malloc(sizeof(char *) * (map->height + 1));
+	if (!temp_map->map2d)
+		return (free(temp_map), NULL);
+	while (++i < map->height)
+	{
+		temp_map->map2d[i] = ft_strdup(map->map2d[i]);
+		if (!temp_map->map2d[i])
+		{
+			free_array(temp_map->map2d);
+			return (free(temp_map), NULL);
+		}
+	}
+	temp_map->map2d[map->height] = NULL;
+	return (temp_map);
+}
+
 //x and y are pointing to one cell
 //x and y begins with player's position and keeps iterating later
 //check if first row has 0, meaning broken wall
@@ -67,16 +98,19 @@ int	flood_fill(t_map *map, int r, int y, int x)
 
 bool	validate_game_config(char *map_file, t_game_config *data)
 {
+	t_map	*temp_map;
+
 	if (is_config_full(data) == false)
 		return (error_msg("missing config info\n"), false);
 	if (validate_n_store_map2d(map_file, data) == false)
 		return (false);
-	print_my_map(data->map);
 	if (parse_player(data) == false)
 		return (error_msg("Player not found"), false);
-	print_my_map(data->map);
-	if (flood_fill(data->map, 0, data->map->player_y, data->map->player_x))
+	temp_map = copy_map(data->map);
+	temp_map->map2d[temp_map->player_y][temp_map->player_x] = '0';
+	if (flood_fill(temp_map, 0, temp_map->player_y, temp_map->player_x))
 		return (error_msg("Invalid map"), false);
+	free_array(temp_map->map2d);
+	free(temp_map);
 	return (true);
 }
-
