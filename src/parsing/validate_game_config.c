@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 18:51:09 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/29 12:25:14 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/29 13:07:00 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	is_config_full(t_game_config *data)
 		return (error_msg("missing north texture\n"), false);
 	return (true);
 }
+//new allocation necessary for temp_map, otherwise it will be a pointer to the
+//original one and changes in the copy will cause change in original
 
 t_map	*copy_map(t_map *map)
 {
@@ -58,8 +60,7 @@ t_map	*copy_map(t_map *map)
 			return (free(temp_map), NULL);
 		}
 	}
-	temp_map->map2d[map->height] = NULL;
-	return (temp_map);
+	return (temp_map->map2d[map->height] = NULL, temp_map);
 }
 
 //x and y are pointing to one cell
