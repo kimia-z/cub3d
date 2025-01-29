@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 11:54:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/28 13:55:31 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/29 12:24:29 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ typedef struct s_map
 	int		pre_start_line_num;
 	int		player_x;//column
 	int		player_y;//row
-	int		map_weidth;
+	int		width;
 	int		height;
 }	t_map;
 
@@ -40,7 +40,6 @@ typedef struct s_texture
 
 typedef struct s_game_config
 {
-	//char	**mapa;
 	char		*no;
 	char		*so;
 	char		*we;

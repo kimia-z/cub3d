@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/24 16:29:25 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/28 16:33:17 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/29 12:25:12 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,22 +40,21 @@ bool	search_player_set_config(t_game_config *data,
 			data->map->player_y = (*row);
 			data->map->player_facing_to = is_player_dir(
 					data->map->map2d[(*row)][(*clmn)]);
-			data->map->map2d[(*row)][(*clmn)] = '0';
 		}
 		(*clmn)++;
 	}
 	return (true);
 }
-// calculate weidth here 
-// if the weidth is smaller than the chars of the current row
+// calculate width here 
+// if the width is smaller than the chars of the current row
 // we set it to the highest weidht 
-// TODO: check if (- 1 ) in weidth is necessary  coz index starts at 0
+// TODO: check if (- 1 ) in width is necessary  coz index starts at 0
 // height++ keeps trck of how many rows processed
 
 void	update_map_size(t_game_config *data, int num_of_chars_in_row)
 {
-	if (num_of_chars_in_row > data->map->map_weidth)
-		data->map->map_weidth = num_of_chars_in_row;
+	if (num_of_chars_in_row > data->map->width)
+		data->map->width = num_of_chars_in_row;
 	data->map->height++;
 }
 //while iterates through every row(element of array) in map2d
@@ -87,5 +86,5 @@ bool	parse_player(t_game_config *data)
 
 //TODO: make a copy of map and then use it for floodfill
 //TODO: study first_no_empty_row and check if we can not use it
-//The height is being overwritten as data->first_non_empty_row, which is not correct.
-// You likely want the total number of rows (non-empty) instead. test it
+//The height is being overwritten as data->first_non_empty_row, which is not correct
+//You likely want the total number of rows (non-empty) instead. test it
