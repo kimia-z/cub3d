@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 18:51:09 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/29 12:25:14 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/29 12:54:12 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ t_map	*copy_map(t_map *map)
 			return (free(temp_map), NULL);
 		}
 	}
-	temp_map->map2d[map->height] = NULL;
-	return (temp_map);
+	return (temp_map->map2d[map->height] = NULL, temp_map);
 }
 
 //x and y are pointing to one cell
