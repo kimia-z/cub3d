@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 11:54:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/29 12:24:29 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/01/29 14:03:13 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_game_config
 	char		*ea;
 	char		*floor_color;
 	char		*ceiling_color;
-	int			first_non_empty_row;
+	int			height_keeper;
 	t_texture	*valid_texture;
 	t_map		*map;
 }	t_game_config;
