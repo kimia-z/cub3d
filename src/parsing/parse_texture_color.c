@@ -12,7 +12,7 @@
 
 #include "../cub3d.h"
 
-bool	init_texture_struct(t_game_config *data)
+bool	init_texture_struct(t_game *data)
 {
 	data->valid_texture = malloc(sizeof(t_texture));//check to free
 	if (data->valid_texture == NULL)
@@ -26,7 +26,7 @@ bool	init_texture_struct(t_game_config *data)
 	return (true);
 }
 
-bool	is_texture_valid(t_game_config *data)
+bool	is_texture_valid(t_game *data)
 {
 	if (data->no == NULL)
 		return (false);
@@ -41,7 +41,7 @@ bool	is_texture_valid(t_game_config *data)
 	return (true);
 }
 
-bool	assign_texture(t_game_config *data)
+bool	assign_texture(t_game *data)
 {
 	data->valid_texture->no = mlx_load_png(data->no);
 	if (!data->valid_texture->no)
@@ -58,7 +58,7 @@ bool	assign_texture(t_game_config *data)
 	return (true);
 }
 
-bool	parse_texture_n_color(t_game_config *data)
+bool	parse_texture_n_color(t_game *data)
 {
 	if (is_texture_valid(data) == false)
 		return (error_msg("invalid texture"), false);

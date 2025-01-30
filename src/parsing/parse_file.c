@@ -35,12 +35,12 @@ char	*skip_space(char *str)
 
 /*
  * Ensures each texture is defined only once by checking if the corresponding 
- * texture pointer in t_game_config is NULL. If a texture is already set 
+ * texture pointer in t_game is NULL. If a texture is already set 
  * (i.e., not NULL), it triggers an error message to prevent overwriting 
  * previously assigned values, ensuring the integrity of the game configuration.
  */
 
-int	fill_texture(t_game_config *data, char *line)
+int	fill_texture(t_game *data, char *line)
 {
 	if (ft_strncmp(line, "NO", 2) == 0)
 	{
@@ -69,7 +69,7 @@ int	fill_texture(t_game_config *data, char *line)
 	return (0);
 }
 
-int	fill_color(t_game_config *data, char *line)
+int	fill_color(t_game *data, char *line)
 {
 	if (ft_strncmp(line, "F", 1) == 0)
 	{
@@ -88,7 +88,7 @@ int	fill_color(t_game_config *data, char *line)
 
 //remove this function if norminette agrees
 
-int	fill_information(t_game_config *data, char *line)
+int	fill_information(t_game *data, char *line)
 {
 	if (fill_texture(data, line) != 0)
 		return (1);
@@ -103,7 +103,7 @@ int	fill_information(t_game_config *data, char *line)
 // get_next_line returns NULL at EOF, ensuring no partial height calculation.
 // Closes the file descriptor after processing all lines.
 
-int	parse_file(char *file, t_game_config *data)
+int	parse_file(char *file, t_game *data)
 {
 	char	*current_line;
 	int		line_num;

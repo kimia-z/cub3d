@@ -12,7 +12,7 @@
 
 #include "../cub3d.h"
 
-void	init_config(t_game_config *data)
+void	init_config(t_game *data)
 {
 	data->no = NULL;
 	data->so = NULL;

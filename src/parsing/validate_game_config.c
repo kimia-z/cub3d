@@ -12,10 +12,10 @@
 
 #include "../cub3d.h"
 
-//is_config_full is checking if all variables in the t_game_config struct r set
+//is_config_full is checking if all variables in the t_game struct r set
 //meaning (non-zero or non-NULL).
 
-int	is_config_full(t_game_config *data)
+int	is_config_full(t_game *data)
 {
 	if (data->ceiling_color == 0)
 		return (error_msg("missing ceiling color\n"), false);
@@ -97,7 +97,7 @@ int	flood_fill(t_map *map, int r, int y, int x)
 	return (r);
 }
 
-bool	validate_game_config(char *map_file, t_game_config *data)
+bool	validate_game_config(char *map_file, t_game *data)
 {
 	t_map	*temp_map;
 

@@ -24,7 +24,7 @@ char	is_player_dir(char c)
 //(using a pointer like &column)
 //so the changes to this variable persist outside the function.
 
-bool	search_player_set_config(t_game_config *data,
+bool	search_player_set_config(t_game *data,
 				int *row, int *column, int *player_count)
 {
 	while (data->map->map2d[(*row)][(*column)])
@@ -51,7 +51,7 @@ bool	search_player_set_config(t_game_config *data,
 // height++ keeps track of how many rows processed
 //meaning move to the next row
 
-void	update_map_size(t_game_config *data, int column)
+void	update_map_size(t_game *data, int column)
 {
 	if (column > data->map->width)
 		data->map->width = column;
@@ -63,7 +63,7 @@ void	update_map_size(t_game_config *data, int column)
 //height marker just remembers the height
 //since we will be increasing and decreasing height here
 
-bool	parse_player(t_game_config *data)
+bool	parse_player(t_game *data)
 {
 	int	column;
 	int	row;

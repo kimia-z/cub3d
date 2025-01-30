@@ -18,7 +18,7 @@
 //Initializes the data->map structure if it's not already allocated and 
 //sets the (pre_start_line_num) to the current line number
 
-bool	parse_map_line(char *current_line, int line_num, t_game_config *data)
+bool	parse_map_line(char *current_line, int line_num, t_game *data)
 {
 	int		i;
 	char	*temp;

@@ -53,7 +53,7 @@ void	free_array(char **array)
 	free(array);
 }
 
-void	clean_map(t_game_config *data)
+void	clean_map(t_game *data)
 {
 	if (data->map->map2d)
 		free_array(data->map->map2d);
@@ -61,7 +61,7 @@ void	clean_map(t_game_config *data)
 		free(data->map);
 }
 
-void	clean_all(t_game_config *data)
+void	clean_all(t_game *data)
 {
 	if (data->no != NULL)
 		free(data->no);

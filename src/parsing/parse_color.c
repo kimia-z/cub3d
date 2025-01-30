@@ -45,7 +45,7 @@ static int	get_rgb(int r, int g, int b, int a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-int	get_colors(t_game_config *data, char **color_num, char **line_elmn)
+int	get_colors(t_game *data, char **color_num, char **line_elmn)
 {
 	int		i;
 	int		number;
@@ -77,7 +77,7 @@ int	get_colors(t_game_config *data, char **color_num, char **line_elmn)
 //element 2: (the rgb values for colors)
 //split rgb values at ','; must be 3 
 
-int	parse_color(t_game_config *data, char *color_line)
+int	parse_color(t_game *data, char *color_line)
 {
 	int		i;
 	char	**color_num;

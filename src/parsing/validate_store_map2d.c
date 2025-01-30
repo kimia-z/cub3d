@@ -12,7 +12,7 @@
 
 #include "../cub3d.h"
 
-static void	skip_to_map_start(t_game_config *data, char *temp, int i, int fd)
+static void	skip_to_map_start(t_game *data, char *temp, int i, int fd)
 {
 	while (i++ < data->map->pre_start_line_num)
 	{
@@ -36,7 +36,7 @@ static int	is_valid_char(char *str)
 	return (0);
 }
 
-static bool	allocate_map2d(t_game_config *data)
+static bool	allocate_map2d(t_game *data)
 {
 	data->map->map2d = ft_calloc(data->map->height + 1, sizeof(char *));
 	if (!data->map->map2d)
@@ -44,7 +44,7 @@ static bool	allocate_map2d(t_game_config *data)
 	return (true);
 }
 
-bool	validate_n_store_map2d(char *map_file, t_game_config *data)
+bool	validate_n_store_map2d(char *map_file, t_game *data)
 {
 	int		fd;
 	int		i;
