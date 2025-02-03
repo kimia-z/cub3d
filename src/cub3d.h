@@ -17,15 +17,20 @@
 # include "../libft/libft.h"
 # include <stdbool.h>
 # include <math.h>
-# define WIDTH 1000 //?
-# define HEIGHT 1900 //?
+# define WIDTH 800 //?
+# define HEIGHT 600 //?
 # define X 0
 # define Y 1
 
-// typedef	struct s_mlx
-// {
-// 	t_mlx	*init_mlx;
-// }	t_mlx;
+typedef	struct s_player
+{
+	float	x; // Player X position in the map
+	float	y; // Player Y position in the map
+	float	dir_x; // X direction vector
+	float	dir_y; // Y direction vector
+	float	plane_x; // X component of the camera plane (FOV)
+	float	plane_y; // Y component of the camera plane (FOV)
+}	t_player;
 
 typedef	struct s_ray
 {
@@ -78,9 +83,12 @@ typedef struct s_game
 	char		*floor_color;
 	char		*ceiling_color;
 	int			height_keeper;
+	mlx_t		*init_mlx;
+	t_player	*player;
+	t_ray		*ray;
 	t_texture	*valid_texture;
 	t_map		*map;
-	mlx_t		*init_mlx;
+
 }	t_game;
 
 bool	check_file_extension(char *str);

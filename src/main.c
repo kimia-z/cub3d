@@ -42,8 +42,10 @@ void	print_my_map(t_map *map)
 	printf("player's direction: %c\n", map->player_facing_to);
 }
 
-int	map_validation(int argc, char **argv, t_game	*data)
+int	main(int argc, char **argv)
 {
+	t_game	data;
+
 	if (argc < 2)
 	{
 		printf("Please input one gaming map\n");
@@ -64,41 +66,14 @@ int	map_validation(int argc, char **argv, t_game	*data)
 	print_my_struct(&data);
 	if (validate_game_config(argv[1], &data) == false)
 		return (clean_all(&data), 1);
-	print_my_map(data->map);
+	print_my_map(data.map);
 }
 
 // int	main(int argc, char **argv)
 // {
 // 	t_game	data;
 
-// 	if (argc < 2)
-// 	{
-// 		printf("Please input one gaming map\n");
-// 		return (1);
-// 	}
-// 	if (argc > 2)
-// 	{
-// 		printf("Please input one file at a time\n");
-// 		return (1);
-// 	}
-// 	if (check_file_extension(argv[1]) == false)
-// 		return (1);
-// 	init_config(&data);
-// 	if (parse_file(argv[1], &data) == -1)
-// 		return (error_msg("returned from parse_file\n"), 1);
-// 	if (parse_texture_n_color(&data) == false)
-// 		return (error_msg("parse texture false\n"), clean_all(&data), 1);
-// 	print_my_struct(&data);
-// 	if (validate_game_config(argv[1], &data) == false)
-// 		return (clean_all(&data), 1);
-// 	print_my_map(data.map);
+// 	map_validation(argc, argv, &data);
+// 	execution(data);
+// 	return (0);
 // }
-
-int	main(int argc, char **argv)
-{
-	t_game	data;
-
-	map_validation(argc, argv, &data);
-	execution(data);
-	return (0);
-}
