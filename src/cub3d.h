@@ -111,4 +111,13 @@ void	free_array(char **array);
 void	print_my_map(t_map *map);
 
 
+/* Hook */
+void	press_key(mlx_key_data_t keydata, t_game *game);
+
+/* Ray casting */
+void	render_raycasting(t_game *game);
+
+/* Execution */
+void	render_images(t_game *game);
+
 #endif
