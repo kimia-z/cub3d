@@ -12,8 +12,6 @@
 
 #include "cub3d.h"
 
-
-
 void	init_ray(t_game *game, t_ray *ray, int x)
 {
 	float	camera_x;
@@ -133,7 +131,7 @@ void	render_wall(t_game *game, t_ray *ray, int side)
 {
 	float	wall_dist;
 	int		line_height;
-	int		star_draw;
+	int		start_draw;
 	int		end_draw;
 
 	if (side == 0)
@@ -141,15 +139,20 @@ void	render_wall(t_game *game, t_ray *ray, int side)
 	else
 		wall_dist = (ray->map_y - ray->pos_y + (1 - ray->step_y) / 2) / ray->ray_dir_y;
 	line_height = (int)(HEIGHT / wall_dist);
-	star_draw = -line_height / 2 + HEIGHT / 2;
-	if(star_draw < 0)
-		star_draw = 0;
+	start_draw = -line_height / 2 + HEIGHT / 2;
+	if(start_draw < 0)
+		start_draw = 0;
 	end_draw = line_height / 2 + HEIGHT / 2;
 	if (end_draw >= HEIGHT)
 		end_draw = HEIGHT - 1;
+	if (side == 0)
+		ray->wall_x = ray->pos_y + wall_dist * ray->delta_dist_y;
+	else
+		ray->wall_x = ray->pos_x + wall_dist * ray->delta_dist_x;
+	ray->wall_x -= floor(ray->wall_x);
 }
 
-void	render_raycasting(t_game *game)
+void	render(t_game *game)
 {
 	/*
 		1.calculate ray direction based on position and oriantation of player
@@ -160,18 +163,18 @@ void	render_raycasting(t_game *game)
 	*/
 
 	t_ray		ray;
-	t_player	player;
 	int			x;
 	int			side;
 
 	x = 0;
 	//initial texture pixel
-	init_player(game, &player);
+
 	while (x < WIDTH)
 	{
 		init_ray(game, &ray, x);
 		side = perform_dda(game, &ray);
 		render_wall(game, &ray, side);
+		draw_wall(game, &ray);
 		x++;
 	}
 }

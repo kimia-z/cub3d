@@ -12,73 +12,104 @@
 
 #include "cub3d.h"
 
-void	move_up(t_game *game)
+static int	move_side(t_game *game, int flag)
 {
-	if (game->map->map2d[game->map->player_y - 1][game->map->player_x] != '1')
+	double	move_step;
+	double	new_x;
+	double	new_y;
+
+	if (flag == RIGHT)
+		move_step = 0.05;
+	else if (flag == LEFT)
+		move_step = -0.05;
+	new_x = game->player->x + game->player->plane_x * move_step;
+	new_y = game->player->y + game->player->plane_y * move_step;
+	if ((game->map->map2d[(int)(new_y - HITBOX)][(int)(new_x)] == '0')
+	&& (game->map->map2d[(int)(new_y)][(int)(new_x - HITBOX)] == '0')
+	&& (game->map->map2d[(int)(new_y + HITBOX)][(int)(new_x)] == '0')
+	&& (game->map->map2d[(int)(new_y)][(int)(new_x + HITBOX)] == '0')
+	&& (game->map->map2d[(int)(new_y)][(int)(new_x)] == '0'))
 	{
-		//game->texture->player->instances->y -= 64;
-		game->map->player_y--;
+		game->player->x = new_x;
+		game->player->y = new_y;
+		return (1);
 	}
 	else
 	{
-		ft_putendl_fd("!You hit the wall!", 2);
+		printf("Hit the wall\n");
+		return (0);
 	}
 }
 
-void	press_key(mlx_key_data_t keydata, t_game *game)
+static	int	move(t_game *game, int flag)
 {
-	if (keydata.key == MLX_KEY_LEFT && keydata.action == MLX_PRESS && keydata.action == MLX_REPEAT)
-	{
-		//look left
-		//ray casting
-		//render image
+	double	move_step;
+	double	new_x;
+	double	new_y;
 
-		render_images(game);
-	}
-	if (keydata.key == MLX_KEY_RIGHT && keydata.action == MLX_PRESS && keydata.action == MLX_REPEAT)
+	if (flag == FORWARD)
+		move_step = 0.05;
+	else if (flag == BACKWARD)
+		move_step = -0.05;
+	new_x = game->player->x + game->player->x * move_step;
+	new_y = game->player->y + game->player->y * move_step;
+	if ((game->map->map2d[(int)(new_y - HITBOX)][(int)(new_x)] == '0')
+	&& (game->map->map2d[(int)(new_y)][(int)(new_x - HITBOX)] == '0')
+	&& (game->map->map2d[(int)(new_y + HITBOX)][(int)(new_x)] == '0')
+	&& (game->map->map2d[(int)(new_y)][(int)(new_x + HITBOX)] == '0')
+	&& (game->map->map2d[(int)(new_y)][(int)(new_x)] == '0'))
 	{
-		//look right
-		//ray casting
-		//render image
+		game->player->x = new_x;
+		game->player->y = new_y;
+		return (1);
+	}
+	else
+	{
+		printf("Hit the wall\n");
+		return (0);
+	}
+}
 
-		render_images(game);
-	}
-	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS && keydata.action == MLX_REPEAT)
-	{
-		//move forward
-		//ray casting
-		//render image
-		move_up(game);
-		render_images(game);
-	}
-	if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS && keydata.action == MLX_REPEAT)
-	{
-		//move backward
-		//ray casting
-		//render image
+static void	turn(t_game *game, int flag)
+{
+	double	new_plane_x;
+	double	new_x_direction;
+	double	move_step;
 
-		render_images(game);
-	}
-	if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS && keydata.action == MLX_REPEAT)
-	{
-		//move left
-		//ray casting
-		//render image
+	if (flag == TURN_LEFT)
+		move_step = 0.05;
+	else if (flag == TURN_RIGHT)
+		move_step = -0.05;
+	new_plane_x = game->player->plane_x * cos(move_step) - game->player->plane_y * sin(move_step);
+	game->player->plane_y = game->player->plane_x * sin(move_step) + game->player->plane_y * cos(move_step);
+	new_x_direction = game->player->dir_x * cos(move_step) - game->player->dir_y * sin(move_step);
+	game->player->dir_y = game->player->dir_x * sin(move_step) + game->player->dir_y * cos(move_step);
+	game->player->plane_x = new_plane_x;
+	game->player->dir_x = new_x_direction;
+}
 
-		render_images(game);
-	}
-	if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS && keydata.action == MLX_REPEAT)
-	{
-		//move right
-		//ray casting
-		//render image
 
-		render_images(game);
-	}
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+void	press_key(void *param)
+{
+	t_game	*game;
+	
+	game = param;
+	if (mlx_is_key_down(game->init_mlx, MLX_KEY_W))
+		move(game, FORWARD);
+	if (mlx_is_key_down(game->init_mlx, MLX_KEY_S))
+		move(game, BACKWARD);
+	if (mlx_is_key_down(game->init_mlx, MLX_KEY_A))
+		move_side(game, LEFT);
+	if (mlx_is_key_down(game->init_mlx, MLX_KEY_D))
+		move_side(game, RIGHT);
+	if (mlx_is_key_down(game->init_mlx, MLX_KEY_RIGHT))
+		turn(game, TURN_RIGHT);
+	if (mlx_is_key_down(game->init_mlx, MLX_KEY_LEFT))
+		turn(game, TURN_LEFT);
+	if (mlx_is_key_down(game->init_mlx, MLX_KEY_ESCAPE))
 	{
-		//close window
-		//quit program
 		mlx_close_window(game->init_mlx);
+		//free!!
+		//exit
 	}
 }

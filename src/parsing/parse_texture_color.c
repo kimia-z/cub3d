@@ -62,8 +62,8 @@ bool	parse_texture_n_color(t_game *data)
 {
 	if (is_texture_valid(data) == false)
 		return (error_msg("invalid texture"), false);
-	if (assign_texture(data) == false)
-		return (false);
+	// if (assign_texture(data) == false)
+	// 	return (false);
 	if (parse_color(data, data->ceiling_color) == false
 		|| parse_color(data, data->floor_color) == false)
 		return (false);

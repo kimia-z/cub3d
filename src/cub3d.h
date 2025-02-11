@@ -19,33 +19,49 @@
 # include <math.h>
 # define WIDTH 800 //?
 # define HEIGHT 600 //?
+# define HITBOX 0.2
 # define X 0
 # define Y 1
 
+typedef enum
+{
+	FORWARD,
+	BACKWARD,
+	LEFT,
+	RIGHT
+}	move_t;
+
+typedef enum
+{
+	TURN_LEFT,
+	TURN_RIGHT
+}	turn_t;
+
 typedef	struct s_player
 {
-	float	x; // Player X position in the map
-	float	y; // Player Y position in the map
-	float	dir_x; // X direction vector
-	float	dir_y; // Y direction vector
-	float	plane_x; // X component of the camera plane (FOV)
-	float	plane_y; // Y component of the camera plane (FOV)
+	double	x; // Player X position in the map
+	double	y; // Player Y position in the map
+	double	dir_x; // X direction vector
+	double	dir_y; // Y direction vector
+	double	plane_x; // X component of the camera plane (FOV)
+	double	plane_y; // Y component of the camera plane (FOV)
 }	t_player;
 
 typedef	struct s_ray
 {
-	float	pos_x;
-	float	pos_y;
+	double	pos_x;
+	double	pos_y;
 	int		map_x;
 	int		map_y;
-	float	step_x;
-	float	step_y;
-	float	delta_dist_x;
-	float	delta_dist_y;
+	double	step_x;
+	double	step_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
 	int		ray_dir_x;
 	int		ray_dir_y;
-	float	side_dist_x;
-	float	side_dist_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	wall_x;
 }	t_ray;
 
 
@@ -115,9 +131,9 @@ void	print_my_map(t_map *map);
 void	press_key(mlx_key_data_t keydata, t_game *game);
 
 /* Ray casting */
-void	render_raycasting(t_game *game);
+void	render(t_game *game);
 
 /* Execution */
-void	render_images(t_game *game);
+// void	render_images(t_game *game);
 
 #endif
