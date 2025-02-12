@@ -36,7 +36,7 @@ SOURCE = src/main.c\
 			src/parsing/parse_texture_color.c\
 			src/parsing/validate_game_config.c\
 			src/parsing/validate_store_map2d.c\
-			# src/execution/execution.c
+			src/execution/execution.c
 
 OBJECTS = $(SOURCE:%.c=$(OBJ_DIR)/%.o)
 

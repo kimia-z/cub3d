@@ -64,40 +64,7 @@ void	init_ray(t_game *game, t_ray *ray, int x)
 	}
 }
 
-void	init_player(t_game *game, t_player *player)
-{
-	player = malloc (sizeof(t_player));
-	player->x = game->map->player_x + 0.5;
-	player->y = game->map->player_y + 0.5;
-	if (game->map->player_facing_to = 'N')
-	{
-		player->dir_x = 0;
-		player->dir_y = -1;
-		player->plane_x = 0.66;
-		player->plane_y = 0;
-	}
-	else if (game->map->player_facing_to = 'S')
-	{
-		player->dir_x = 0;
-		player->dir_y = 1;
-		player->plane_x = -0.66;
-		player->plane_y = 0;
-	}
-	else if (game->map->player_facing_to = 'E')
-	{
-		player->dir_x = 1;
-		player->dir_y = 0;
-		player->plane_x = 0;
-		player->plane_y = 0.66;
-	}
-	else if (game->map->player_facing_to = 'W')
-	{
-		player->dir_x = -1;
-		player->dir_y = 0;
-		player->plane_x = 0;
-		player->plane_y = -0.66;
-	}
-}
+
 
 int	perform_dda(t_game *game, t_ray *ray)
 {

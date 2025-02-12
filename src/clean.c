@@ -53,32 +53,32 @@ void	free_array(char **array)
 	free(array);
 }
 
-void	clean_map(t_game *data)
+void	clean_map(t_game *game)
 {
-	if (data->map->map2d)
-		free_array(data->map->map2d);
-	if (data->map != NULL)
-		free(data->map);
+	if (game->map->map2d)
+		free_array(game->map->map2d);
+	if (game->map != NULL)
+		free(game->map);
 }
 
-void	clean_all(t_game *data)
+void	clean_all(t_game *game)
 {
-	if (data->no != NULL)
-		free(data->no);
-	if (data->so != NULL)
-		free(data->so);
-	if (data->ea != NULL)
-		free(data->ea);
-	if (data->we != NULL)
-		free(data->we);
-	if (data->floor_color != NULL)
-		free(data->floor_color);
-	if (data->ceiling_color != NULL)
-		free(data->ceiling_color);
-	// if (data->mapa != NULL)
-	// 	free_split(data->mapa);
-	if (data->valid_texture)
-		clean_texture(data->valid_texture);
-	if (data->map)
-		clean_map(data);
+	if (game->no != NULL)
+		free(game->no);
+	if (game->so != NULL)
+		free(game->so);
+	if (game->ea != NULL)
+		free(game->ea);
+	if (game->we != NULL)
+		free(game->we);
+	if (game->floor_color != NULL)
+		free(game->floor_color);
+	if (game->ceiling_color != NULL)
+		free(game->ceiling_color);
+	// if (game->mapa != NULL)
+	// 	free_split(game->mapa);
+	if (game->valid_texture)
+		clean_texture(game->valid_texture);
+	if (game->map)
+		clean_map(game);
 }

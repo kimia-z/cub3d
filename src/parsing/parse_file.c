@@ -40,70 +40,70 @@ char	*skip_space(char *str)
  * previously assigned values, ensuring the integrity of the game configuration.
  */
 
-int	fill_texture(t_game *data, char *line)
+int	fill_texture(t_game *game, char *line)
 {
 	if (ft_strncmp(line, "NO", 2) == 0)
 	{
-		if (data->no != NULL)
+		if (game->no != NULL)
 			return (error_msg("Duplicate texture definition: North"), 1);
-		data->no = skip_space(line);
+		game->no = skip_space(line);
 	}
 	if (ft_strncmp(line, "WE", 2) == 0)
 	{
-		if (data->we != NULL)
+		if (game->we != NULL)
 			return (error_msg("Duplicate texture definition: West"), 1);
-		data->we = skip_space(line);
+		game->we = skip_space(line);
 	}
 	else if (ft_strncmp(line, "SO", 2) == 0)
 	{
-		if (data->so != NULL)
+		if (game->so != NULL)
 			return (error_msg("Duplicate texture definition: South"), 1);
-		data->so = skip_space(line);
+		game->so = skip_space(line);
 	}
 	else if (ft_strncmp(line, "EA", 2) == 0)
 	{
-		if (data->ea != NULL)
+		if (game->ea != NULL)
 			return (error_msg("Duplicate texture definition: East"), 1);
-		data->ea = skip_space(line);
+		game->ea = skip_space(line);
 	}
 	return (0);
 }
 
-int	fill_color(t_game *data, char *line)
+int	fill_color(t_game *game, char *line)
 {
 	if (ft_strncmp(line, "F", 1) == 0)
 	{
-		if (data->floor_color != NULL)
+		if (game->floor_color != NULL)
 			return (error_msg("Duplicate color definition: floor\n"), 1);
-		data->floor_color = ft_strdup(line);
+		game->floor_color = ft_strdup(line);
 	}
 	else if (ft_strncmp(line, "C", 1) == 0)
 	{
-		if (data->ceiling_color != NULL)
+		if (game->ceiling_color != NULL)
 			return (error_msg("Duplicate color definition; ceiling\n"), 1);
-		data->ceiling_color = ft_strdup(line);
+		game->ceiling_color = ft_strdup(line);
 	}
 	return (0);
 }
 
 //remove this function if norminette agrees
 
-int	fill_information(t_game *data, char *line)
+int	fill_information(t_game *game, char *line)
 {
-	if (fill_texture(data, line) != 0)
+	if (fill_texture(game, line) != 0)
 		return (1);
-	if (fill_color(data, line) != 0)
+	if (fill_color(game, line) != 0)
 		return (1);
 	return (0);
 }
 // Opens the file and reads it line by line using get_next_line.
-// Processes each line to fill game configuration data (textures, colors, etc.).
-// Identifies and processes map lines, initializing map data if required.
+// Processes each line to fill game configuration game (textures, colors, etc.).
+// Identifies and processes map lines, initializing map game if required.
 // Ensures all lines are parsed before calculating the map's height.
 // get_next_line returns NULL at EOF, ensuring no partial height calculation.
 // Closes the file descriptor after processing all lines.
 
-int	parse_file(char *file, t_game *data)
+int	parse_file(char *file, t_game *game)
 {
 	char	*current_line;
 	int		line_num;
@@ -118,15 +118,15 @@ int	parse_file(char *file, t_game *data)
 		return (error_msg("get_next_line failed\n"), -1);
 	while (current_line != NULL)
 	{
-		if (fill_information(data, current_line) != 0)
+		if (fill_information(game, current_line) != 0)
 			return (free(current_line), -1);
-		parse_map_line(current_line, line_num, data);
+		parse_map_line(current_line, line_num, game);
 		free(current_line);
 		line_num++;
 		current_line = get_next_line(fd);
 	}
 	free(current_line);
-	if (data->map)
-		data->map->height = line_num - data->map->pre_start_line_num;
+	if (game->map)
+		game->map->height = line_num - game->map->pre_start_line_num;
 	return (close(fd));
 }

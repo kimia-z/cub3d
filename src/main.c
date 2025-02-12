@@ -14,21 +14,21 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-void	print_my_struct(t_game *data)
+void	print_my_struct(t_game *game)
 {
-	printf("ceiling_color: %s\n", data->ceiling_color);
-	printf("floor_color: %s\n", data->floor_color);
-	printf("east texture: %s\n", data->ea);
-	printf("north texture: %s\n", data->no);
-	printf("south texture: %s\n", data->so);
-	printf("west texture: %s\n", data->we);
-	printf("pre_start_line_num: %d\n", data->map->pre_start_line_num);
-	printf("map_height: %d\n", data->map->height);
-	printf("Floor color as decimal: %u\n", data->valid_texture->floor);
-	printf("Floor color as hexadecimal: %#X\n", data->valid_texture->floor);
-	printf("Ceiling color as decimal: %u\n", data->valid_texture->ceiling);
-	printf("Ceiling color as hexadecimal: %#X\n", data->valid_texture->ceiling);
-	printf("map width: %d\n", data->map->width);
+	printf("ceiling_color: %s\n", game->ceiling_color);
+	printf("floor_color: %s\n", game->floor_color);
+	printf("east texture: %s\n", game->ea);
+	printf("north texture: %s\n", game->no);
+	printf("south texture: %s\n", game->so);
+	printf("west texture: %s\n", game->we);
+	printf("pre_start_line_num: %d\n", game->map->pre_start_line_num);
+	printf("map_height: %d\n", game->map->height);
+	printf("Floor color as decimal: %u\n", game->valid_texture->floor);
+	printf("Floor color as hexadecimal: %#X\n", game->valid_texture->floor);
+	printf("Ceiling color as decimal: %u\n", game->valid_texture->ceiling);
+	printf("Ceiling color as hexadecimal: %#X\n", game->valid_texture->ceiling);
+	printf("map width: %d\n", game->map->width);
 }
 
 void	print_my_map(t_map *map)
@@ -44,7 +44,7 @@ void	print_my_map(t_map *map)
 
 int	main(int argc, char **argv)
 {
-	t_game	data;
+	t_game	game;
 
 	if (argc < 2)
 	{
@@ -58,22 +58,23 @@ int	main(int argc, char **argv)
 	}
 	if (check_file_extension(argv[1]) == false)
 		return (1);
-	init_config(&data);
-	if (parse_file(argv[1], &data) == -1)
+	init_config(&game);
+	if (parse_file(argv[1], &game) == -1)
 		return (error_msg("returned from parse_file\n"), 1);
-	if (parse_texture_n_color(&data) == false)
-		return (error_msg("parse texture false\n"), clean_all(&data), 1);
-	print_my_struct(&data);
-	if (validate_game_config(argv[1], &data) == false)
-		return (clean_all(&data), 1);
-	print_my_map(data.map);
+	if (parse_texture_n_color(&game) == false)
+		return (error_msg("parse texture false\n"), clean_all(&game), 1);
+	print_my_struct(&game);
+	if (validate_game_config(argv[1], &game) == false)
+		return (clean_all(&game), 1);
+	print_my_map(game.map);
+	execution(&game);
 }
 
 // int	main(int argc, char **argv)
 // {
-// 	t_game	data;
+// 	t_game	game;
 
-// 	map_validation(argc, argv, &data);
-// 	execution(data);
+// 	map_validation(argc, argv, &game);
+// 	execution(game);
 // 	return (0);
 // }

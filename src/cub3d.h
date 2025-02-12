@@ -82,10 +82,8 @@ typedef struct s_texture
 	mlx_texture_t	*so;
 	mlx_texture_t	*ea;
 	mlx_texture_t	*we;
-	mlx_image_t		*img_no;
-	mlx_image_t		*img_so;
-	mlx_image_t		*img_ea;
-	mlx_image_t		*img_we;
+	mlx_image_t		*img;
+	int32_t			index;
 	uint32_t		ceiling;
 	uint32_t		floor;
 }	t_texture;
@@ -108,19 +106,19 @@ typedef struct s_game
 }	t_game;
 
 bool	check_file_extension(char *str);
-void	init_config(t_game *data);
-int		parse_file(char *file, t_game *data);
-int		parse_color(t_game *data, char *color_line);
-bool	parse_map_line(char *current_line, int line_num, t_game *data);
-bool	parse_texture_n_color(t_game *data);
-bool	validate_game_config(char *argv, t_game *data);
-bool	validate_n_store_map2d(char *map_file, t_game *data);
-bool	parse_player(t_game *data);
+void	init_config(t_game *game);
+int		parse_file(char *file, t_game *game);
+int		parse_color(t_game *game, char *color_line);
+bool	parse_map_line(char *current_line, int line_num, t_game *game);
+bool	parse_texture_n_color(t_game *game);
+bool	validate_game_config(char *argv, t_game *game);
+bool	validate_n_store_map2d(char *map_file, t_game *game);
+bool	parse_player(t_game *game);
 char	is_player_dir(char c);
 
 void	error_msg(char *message);
 
-void	clean_all(t_game *data);
+void	clean_all(t_game *game);
 void	free_array(char **array);
 
 //debugging
@@ -128,12 +126,13 @@ void	print_my_map(t_map *map);
 
 
 /* Hook */
-void	press_key(mlx_key_data_t keydata, t_game *game);
+void	press_key(void *param);
 
 /* Ray casting */
 void	render(t_game *game);
 
 /* Execution */
+void	execution(t_game *game);
 // void	render_images(t_game *game);
 
 #endif

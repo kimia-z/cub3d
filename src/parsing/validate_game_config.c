@@ -15,19 +15,19 @@
 //is_config_full is checking if all variables in the t_game struct r set
 //meaning (non-zero or non-NULL).
 
-int	is_config_full(t_game *data)
+int	is_config_full(t_game *game)
 {
-	if (data->ceiling_color == 0)
+	if (game->ceiling_color == 0)
 		return (error_msg("missing ceiling color\n"), false);
-	if (data->floor_color == 0)
+	if (game->floor_color == 0)
 		return (error_msg("missing floor color\n"), false);
-	if (data->ea == NULL)
+	if (game->ea == NULL)
 		return (error_msg("missing east texture\n"), false);
-	if (data->we == NULL)
+	if (game->we == NULL)
 		return (error_msg("missing west texture\n"), false);
-	if (data->so == NULL)
+	if (game->so == NULL)
 		return (error_msg("missing south texture\n"), false);
-	if (data->no == NULL)
+	if (game->no == NULL)
 		return (error_msg("missing north texture\n"), false);
 	return (true);
 }
@@ -97,17 +97,17 @@ int	flood_fill(t_map *map, int r, int y, int x)
 	return (r);
 }
 
-bool	validate_game_config(char *map_file, t_game *data)
+bool	validate_game_config(char *map_file, t_game *game)
 {
 	t_map	*temp_map;
 
-	if (is_config_full(data) == false)
+	if (is_config_full(game) == false)
 		return (error_msg("missing config info\n"), false);
-	if (validate_n_store_map2d(map_file, data) == false)
+	if (validate_n_store_map2d(map_file, game) == false)
 		return (false);
-	if (parse_player(data) == false)
+	if (parse_player(game) == false)
 		return (error_msg("Player not found"), false);
-	temp_map = copy_map(data->map);
+	temp_map = copy_map(game->map);
 	temp_map->map2d[temp_map->player_y][temp_map->player_x] = '0';
 	if (flood_fill(temp_map, 0, temp_map->player_y, temp_map->player_x))
 		return (error_msg("Invalid map"), false);

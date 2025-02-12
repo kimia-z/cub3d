@@ -12,60 +12,43 @@
 
 #include "../cub3d.h"
 
-bool	init_texture_struct(t_game *data)
+bool	init_texture_struct(t_game *game)
 {
-	data->valid_texture = malloc(sizeof(t_texture));//check to free
-	if (data->valid_texture == NULL)
+	game->valid_texture = malloc(sizeof(t_texture));//check to free
+	if (game->valid_texture == NULL)
 		return (error_msg("malloc failed for texture"), false);
-	data->valid_texture->floor = 0;
-	data->valid_texture->ceiling = 0;
-	data->valid_texture->ea = NULL;
-	data->valid_texture->no = NULL;
-	data->valid_texture->so = NULL;
-	data->valid_texture->we = NULL;
+	game->valid_texture->floor = 0;
+	game->valid_texture->ceiling = 0;
+	game->valid_texture->ea = NULL;
+	game->valid_texture->no = NULL;
+	game->valid_texture->so = NULL;
+	game->valid_texture->we = NULL;
 	return (true);
 }
 
-bool	is_texture_valid(t_game *data)
+bool	is_texture_valid(t_game *game)
 {
-	if (data->no == NULL)
+	if (game->no == NULL)
 		return (false);
-	if (data->so == NULL)
+	if (game->so == NULL)
 		return (false);
-	if (data->ea == NULL)
+	if (game->ea == NULL)
 		return (false);
-	if (data->we == NULL)
+	if (game->we == NULL)
 		return (false);
-	if (init_texture_struct(data) == false)
+	if (init_texture_struct(game) == false)
 		return (false);
 	return (true);
 }
 
-bool	assign_texture(t_game *data)
+bool	parse_texture_n_color(t_game *game)
 {
-	data->valid_texture->no = mlx_load_png(data->no);
-	if (!data->valid_texture->no)
-		return (error_msg("texture loading failed: north"), false);
-	data->valid_texture->so = mlx_load_png(data->so);
-	if (!data->valid_texture->so)
-		return (error_msg("texture loading failed: south"), false);
-	data->valid_texture->we = mlx_load_png(data->we);
-	if (!data->valid_texture->we)
-		return (error_msg("texture loading failed: west"), false);
-	data->valid_texture->ea = mlx_load_png(data->ea);
-	if (!data->valid_texture->ea)
-		return (error_msg("texture loading failed: east"), false);
-	return (true);
-}
-
-bool	parse_texture_n_color(t_game *data)
-{
-	if (is_texture_valid(data) == false)
+	if (is_texture_valid(game) == false)
 		return (error_msg("invalid texture"), false);
-	// if (assign_texture(data) == false)
+	// if (assign_texture(game) == false)
 	// 	return (false);
-	if (parse_color(data, data->ceiling_color) == false
-		|| parse_color(data, data->floor_color) == false)
+	if (parse_color(game, game->ceiling_color) == false
+		|| parse_color(game, game->floor_color) == false)
 		return (false);
 	return (true);
 }
