@@ -57,8 +57,8 @@ typedef	struct s_ray
 	double	step_y;
 	double	delta_dist_x;
 	double	delta_dist_y;
-	int		ray_dir_x;
-	int		ray_dir_y;
+	double	ray_dir_x;
+	double	ray_dir_y;
 	double	side_dist_x;
 	double	side_dist_y;
 	double	wall_x;
@@ -129,7 +129,7 @@ void	print_my_map(t_map *map);
 void	press_key(void *param);
 
 /* Ray casting */
-void	render(t_game *game);
+void	render(void *param);
 
 /* Execution */
 void	execution(t_game *game);

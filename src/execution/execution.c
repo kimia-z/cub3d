@@ -56,13 +56,8 @@
 // 	}
 // }
 
-void	init_player(t_game *game, t_player *player)
+t_player	*init_player(t_game *game, t_player *player)
 {
-	player = malloc (sizeof(t_player));
-	if (player == NULL)
-	{
-		return;
-	}
 	player->x = game->map->player_x + 0.5;
 	player->y = game->map->player_y + 0.5;
 	if (game->map->player_facing_to == 'N')
@@ -93,6 +88,8 @@ void	init_player(t_game *game, t_player *player)
 		player->plane_x = 0;
 		player->plane_y = -0.66;
 	}
+	
+	return(player);
 }
 
 bool	assign_texture(t_game *game)
@@ -182,8 +179,12 @@ void	execution(t_game *game)
 		8.exit and 
 	*/
 
-	t_player	player;
-	
+	// t_player	*player;
+	game->player = malloc (sizeof(t_player));
+	if (game->player == NULL)
+	{
+		return ;
+	}
 	//start mlx
 	game->init_mlx = mlx_init(WIDTH, HEIGHT, "cub3d", true);
 	if (game->init_mlx == NULL)
@@ -206,9 +207,10 @@ void	execution(t_game *game)
 	// 	the user requests that the window should close.
 	// */
 	init_textures(game);
-	init_player(game, &player);
-	mlx_key_hook(game->init_mlx, &press_key, game);
-	mlx_key_hook(game->init_mlx, &render, game);
+	game->player = init_player(game, game->player);
+
+	mlx_loop_hook(game->init_mlx, press_key, game);
+	mlx_loop_hook(game->init_mlx, render, game);
 	mlx_loop(game->init_mlx);
 	mlx_delete_image(game->init_mlx, game->valid_texture->img);
 	// mlx_delete_texture();

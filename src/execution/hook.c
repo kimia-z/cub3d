@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
-
+#include "../cub3d.h"
+/*
 static int	move_side(t_game *game, int flag)
 {
 	double	move_step;
@@ -88,24 +88,24 @@ static void	turn(t_game *game, int flag)
 	game->player->dir_x = new_x_direction;
 }
 
-
+*/
 void	press_key(void *param)
 {
 	t_game	*game;
 	
 	game = param;
-	if (mlx_is_key_down(game->init_mlx, MLX_KEY_W))
-		move(game, FORWARD);
-	if (mlx_is_key_down(game->init_mlx, MLX_KEY_S))
-		move(game, BACKWARD);
-	if (mlx_is_key_down(game->init_mlx, MLX_KEY_A))
-		move_side(game, LEFT);
-	if (mlx_is_key_down(game->init_mlx, MLX_KEY_D))
-		move_side(game, RIGHT);
-	if (mlx_is_key_down(game->init_mlx, MLX_KEY_RIGHT))
-		turn(game, TURN_RIGHT);
-	if (mlx_is_key_down(game->init_mlx, MLX_KEY_LEFT))
-		turn(game, TURN_LEFT);
+	// if (mlx_is_key_down(game->init_mlx, MLX_KEY_W))
+	// 	move(game, FORWARD);
+	// if (mlx_is_key_down(game->init_mlx, MLX_KEY_S))
+	// 	move(game, BACKWARD);
+	// if (mlx_is_key_down(game->init_mlx, MLX_KEY_A))
+	// 	move_side(game, LEFT);
+	// if (mlx_is_key_down(game->init_mlx, MLX_KEY_D))
+	// 	move_side(game, RIGHT);
+	// if (mlx_is_key_down(game->init_mlx, MLX_KEY_RIGHT))
+	// 	turn(game, TURN_RIGHT);
+	// if (mlx_is_key_down(game->init_mlx, MLX_KEY_LEFT))
+	// 	turn(game, TURN_LEFT);
 	if (mlx_is_key_down(game->init_mlx, MLX_KEY_ESCAPE))
 	{
 		mlx_close_window(game->init_mlx);
