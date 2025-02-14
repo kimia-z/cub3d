@@ -82,6 +82,7 @@ fclean: clean
 	@$(MAKE) fclean -C ./libft
 	@rm -f $(NAME)
 	@rm -rf $(LIBMLX)/build
+	@rm -rf ./MLX42
 	@echo "CUB3D REMOVED"
 
 re: fclean all

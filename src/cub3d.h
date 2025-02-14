@@ -37,6 +37,14 @@ typedef enum
 	TURN_RIGHT
 }	turn_t;
 
+typedef enum
+{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST
+}	dir_t;
+
 typedef	struct s_player
 {
 	double	x; // Player X position in the map
