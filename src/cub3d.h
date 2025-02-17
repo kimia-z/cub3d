@@ -39,10 +39,10 @@ typedef enum
 
 typedef enum
 {
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST
+	no,
+	so,
+	ea,
+	we
 }	dir_t;
 
 typedef	struct s_player
@@ -123,6 +123,7 @@ bool	validate_game_config(char *argv, t_game *game);
 bool	validate_n_store_map2d(char *map_file, t_game *game);
 bool	parse_player(t_game *game);
 char	is_player_dir(char c);
+int		get_rgb(int r, int g, int b, int a);
 
 void	error_msg(char *message);
 

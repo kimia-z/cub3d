@@ -40,7 +40,7 @@ size_t	count_arr_elements(char **arr)
 //because every number needs to be specifically positioned in a 32-bit number
 // | (bitwise OR) operator combines all the shifted values into 1 32-bit number.
 
-static int	get_rgb(int r, int g, int b, int a)
+int	get_rgb(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
