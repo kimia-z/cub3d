@@ -21,7 +21,7 @@ t_ray	*init_ray(t_game *game, t_ray *ray, int x)
 	ray->pos_y = game->player->y;
 	
 	// Compute the camera X coordinate for this screen column (-1 to 1 range)
-	camera_x = 2 * x / (float)WIDTH - 1;
+	camera_x = 2 * x / (double)WIDTH - 1;
 
 	// Compute the ray direction
 	ray->ray_dir_x = game->player->dir_x + game->player->plane_x * camera_x;
@@ -61,7 +61,7 @@ t_ray	*init_ray(t_game *game, t_ray *ray, int x)
 		ray->side_dist_y = (ray->map_y + 1.0 - ray->pos_y) * ray->delta_dist_y;
 	}
 	// printf("game_player=%f\nray_posx=%f\n", game->player->x,ray->pos_x);
-	printf("finish init ray\n\n");
+	//printf("finish init ray\n\n");
 	return (ray);
 }
 
@@ -71,13 +71,13 @@ int	perform_dda(t_game *game, t_ray *ray)
 {
 	int	side;
 
-	printf("before dda loop\n");
+	//printf("before dda loop\n");
 	while(true)
 	{
-		printf("side_dist_x=%f\nside_dist_y=%f\n", ray->side_dist_x, ray->side_dist_y);
+		//printf("side_dist_x=%f\nside_dist_y=%f\n", ray->side_dist_x, ray->side_dist_y);
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
-			printf("side_dist_x < side_dist_y\n");
+			//printf("side_dist_x < side_dist_y\n");
 			//continue with x
 			ray->side_dist_x += ray->delta_dist_x;
 			ray->map_x += ray->step_x;
@@ -88,8 +88,8 @@ int	perform_dda(t_game *game, t_ray *ray)
 		}
 		else
 		{
-			printf("side_dist_x >= side_dist_y\n");
-			printf("delta_dist_y=%f\nstep_y=%f\nmap_y=%d\nray_dir_y=%f\n\n", ray->delta_dist_y, ray->step_y, ray->map_y, ray->ray_dir_y);
+			//printf("side_dist_x >= side_dist_y\n");
+			//printf("delta_dist_y=%f\nstep_y=%f\nmap_y=%d\nray_dir_y=%f\n\n", ray->delta_dist_y, ray->step_y, ray->map_y, ray->ray_dir_y);
 			//continue with y
 			ray->side_dist_y += ray->delta_dist_y;
 			ray->map_y += ray->step_y;
@@ -97,17 +97,17 @@ int	perform_dda(t_game *game, t_ray *ray)
 				side = no;
 			else
 				side = so;
-			printf("side_dist_y=%f\nmap_y=%d\nray_dir_y=%f\nside=%d\n", ray->side_dist_y, ray->map_y, ray->ray_dir_y, side);
+			//printf("side_dist_y=%f\nmap_y=%d\nray_dir_y=%f\nside=%d\n", ray->side_dist_y, ray->map_y, ray->ray_dir_y, side);
 		}
-		printf("\n\nmap[%d][%d] = %c\n", ray->map_y, ray->map_x, game->map->map2d[ray->map_y][ray->map_x]);
+		//printf("\n\nmap[%d][%d] = %c\n", ray->map_y, ray->map_x, game->map->map2d[ray->map_y][ray->map_x]);
 		if (game->map->map2d[ray->map_y][ray->map_x] == '1' || ray->map_x < 0 || ray->map_x >= game->map->width
 			|| ray->map_y < 0 || ray->map_y >= game->map->height)
 		{
-			printf("hit the wall\n");
+			//printf("hit the wall\n");
 			break;
 		}
 	}
-	printf("after dda loop\n\n");
+	//printf("after dda loop\n\n");
 	return (side);
 }
 
@@ -130,11 +130,12 @@ void	render_wall(t_game *game, t_ray *ray, int side, int i)
 	double	pos;
 	int		j;
 
-
-	if (side == no || side == ea)
-		wall_dist = (ray->map_x - ray->pos_x + (1 - ray->step_x) / 2) / ray->ray_dir_x;
+	// wall_dist = (ray->map_x - ray->pos_x + (1 - ray->step_x) / 2) / ray->ray_dir_x;
+	//wall_dist = (ray->map_y - ray->pos_y + (1 - ray->step_y) / 2) / ray->ray_dir_y;
+	if (side == no || side == so)
+		wall_dist = ray->side_dist_y - ray->delta_dist_y;
 	else
-		wall_dist = (ray->map_y - ray->pos_y + (1 - ray->step_y) / 2) / ray->ray_dir_y;
+		wall_dist = ray->side_dist_x - ray->delta_dist_x;
 	line_height = (int)(HEIGHT / wall_dist);
 	start_draw = (int)(-line_height / 2 + HEIGHT / 2);
 	if(start_draw < 0)
@@ -152,17 +153,17 @@ void	render_wall(t_game *game, t_ray *ray, int side, int i)
 		tex_width = game->valid_texture->no->width;
 		tex_height = game->valid_texture->no->height;
 	}
-	if (side == so)
+	else if (side == so)
 	{
 		tex_width = game->valid_texture->so->width;
 		tex_height = game->valid_texture->so->height;
 	}
-	if (side == ea)
+	else if (side == ea)
 	{
 		tex_width = game->valid_texture->ea->width;
 		tex_height = game->valid_texture->ea->height;
 	}
-	if (side == we)
+	else
 	{
 		tex_width = game->valid_texture->we->width;
 		tex_height = game->valid_texture->we->height;
@@ -173,7 +174,7 @@ void	render_wall(t_game *game, t_ray *ray, int side, int i)
 	if ((side == no || side == so) && ray->ray_dir_y < 0)
 		tex_x = tex_width - tex_x - 1;
 	step = 1.0 * tex_height / line_height;
-	pos = (start_draw - HEIGHT / 2 + line_height / 2) * step;
+	pos = fabs((start_draw - HEIGHT / 2 + line_height / 2) * step);
 	j = 0;
 	while (j < HEIGHT)
 	{
@@ -239,10 +240,10 @@ void	render(void *param)
 	}
 	x = 0;
 	//initial texture pixel
-	printf("\n\nbefore ray loop\n");
+	// printf("\n\nbefore ray loop\n");
 	while (x < WIDTH)
 	{
-		printf("after ray loop\n\n");
+		// printf("after ray loop\n\n");
 		game->ray = init_ray(game, game->ray, x);
 		side = perform_dda(game, game->ray);
 		render_wall(game, game->ray, side, x);

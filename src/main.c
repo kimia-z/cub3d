@@ -66,7 +66,7 @@ int	main(int argc, char **argv)
 	print_my_struct(&game);
 	if (validate_game_config(argv[1], &game) == false)
 		return (clean_all(&game), 1);
-	print_my_map(game.map);
+	// print_my_map(game.map);
 	execution(&game);
 }
 
