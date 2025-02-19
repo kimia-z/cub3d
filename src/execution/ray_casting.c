@@ -17,8 +17,8 @@ t_ray	*init_ray(t_game *game, t_ray *ray, int x)
 	float	camera_x;
 
 	// Set the initial position of the ray at the player's position
-	ray->pos_x = game->player->x;
-	ray->pos_y = game->player->y;
+	// ray->pos_x = game->player->x;
+	// ray->pos_y = game->player->y;
 	
 	// Compute the camera X coordinate for this screen column (-1 to 1 range)
 	camera_x = 2 * x / (double)WIDTH - 1;
@@ -28,8 +28,8 @@ t_ray	*init_ray(t_game *game, t_ray *ray, int x)
 	ray->ray_dir_y = game->player->dir_y + game->player->plane_y *camera_x;
 
 	// Grid position of the ray
-	ray->map_x = (int)ray->pos_x; //player_x
-	ray->map_y = (int)ray->pos_y; //player_y
+	ray->map_x = (int)game->player->x; //player_x
+	ray->map_y = (int)game->player->y; //player_y
 
 	// Distance to next grid intersection
 	if(ray->ray_dir_x == 0)
@@ -43,22 +43,22 @@ t_ray	*init_ray(t_game *game, t_ray *ray, int x)
 	if (ray->ray_dir_x < 0)
 	{
 		ray->step_x = -1;
-		ray->side_dist_x = (ray->pos_x - ray->map_x) * ray->delta_dist_x;
+		ray->side_dist_x = (game->player->x - ray->map_x) * ray->delta_dist_x;
 	}
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x + 1.0 - ray->pos_x) * ray->delta_dist_x;
+		ray->side_dist_x = (ray->map_x + 1.0 - game->player->x) * ray->delta_dist_x;
 	}
 	if (ray->ray_dir_y < 0)
 	{
 		ray->step_y = -1;
-		ray->side_dist_y = (ray->pos_y - ray->map_y) * ray->delta_dist_y;
+		ray->side_dist_y = (game->player->y - ray->map_y) * ray->delta_dist_y;
 	}
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y + 1.0 - ray->pos_y) * ray->delta_dist_y;
+		ray->side_dist_y = (ray->map_y + 1.0 - game->player->y) * ray->delta_dist_y;
 	}
 	// printf("game_player=%f\nray_posx=%f\n", game->player->x,ray->pos_x);
 	//printf("finish init ray\n\n");
@@ -144,9 +144,9 @@ void	render_wall(t_game *game, t_ray *ray, int side, int i)
 	if (end_draw > HEIGHT)
 		end_draw = HEIGHT - 1;
 	if (side == we || side == ea)
-		ray->wall_x = ray->pos_y + wall_dist * ray->ray_dir_y;
+		ray->wall_x = game->player->y + wall_dist * ray->ray_dir_y;
 	else
-		ray->wall_x = ray->pos_x + wall_dist * ray->ray_dir_x;
+		ray->wall_x = game->player->x + wall_dist * ray->ray_dir_x;
 	ray->wall_x -= floor(ray->wall_x);
 	if (side == no)
 	{
@@ -168,13 +168,14 @@ void	render_wall(t_game *game, t_ray *ray, int side, int i)
 		tex_width = game->valid_texture->we->width;
 		tex_height = game->valid_texture->we->height;
 	}
-	tex_x = (int) (ray->wall_x * (double)tex_width);
+	tex_x = (int)(ray->wall_x * (double)tex_width);
 	if ((side == we || side == ea) && ray->ray_dir_x > 0)
 		tex_x = tex_width - tex_x - 1;
 	if ((side == no || side == so) && ray->ray_dir_y < 0)
 		tex_x = tex_width - tex_x - 1;
 	step = 1.0 * tex_height / line_height;
-	pos = fabs((start_draw - HEIGHT / 2 + line_height / 2) * step);
+	// pos = fabs(start_draw - HEIGHT / 2 + line_height / 2) * step;
+	pos = (start_draw - HEIGHT / 2 + line_height / 2) * step;
 	j = 0;
 	while (j < HEIGHT)
 	{

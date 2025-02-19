@@ -57,8 +57,8 @@ typedef	struct s_player
 
 typedef	struct s_ray
 {
-	double	pos_x;
-	double	pos_y;
+	// double	pos_x;
+	// double	pos_y;
 	int		map_x;
 	int		map_y;
 	double	step_x;

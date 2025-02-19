@@ -51,8 +51,8 @@ static	int	move(t_game *game, int flag)
 		move_step = 0.05;
 	else
 		move_step = -0.05;
-	new_x = game->player->x + game->ray->pos_x * move_step;
-	new_y = game->player->y + game->ray->pos_y * move_step;
+	new_x = game->player->x + game->player->x * move_step;
+	new_y = game->player->y + game->player->y * move_step;
 	if ((game->map->map2d[(int)(new_y - HITBOX)][(int)(new_x)] == '0')
 	&& (game->map->map2d[(int)(new_y)][(int)(new_x - HITBOX)] == '0')
 	&& (game->map->map2d[(int)(new_y + HITBOX)][(int)(new_x)] == '0')
