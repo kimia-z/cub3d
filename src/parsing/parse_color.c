@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 19:31:07 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/27 16:52:34 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/02/26 17:33:02 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,3 @@ int	parse_color(t_game *game, char *color_line)
 	free_array(line_elmn);
 	return (0);
 }
-
-//TODO: consider returning 1 when error
-
-

@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 18:51:09 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/29 13:07:00 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/02/26 16:50:15 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ bool	validate_game_config(char *map_file, t_game *game)
 	temp_map->map2d[temp_map->player_y][temp_map->player_x] = '0';
 	if (flood_fill(temp_map, 0, temp_map->player_y, temp_map->player_x))
 		return (error_msg("Invalid map"), false);
+	game->map->map2d[game->map->player_y][game->map->player_x] = '0';
 	free_array(temp_map->map2d);
 	free(temp_map);
 	return (true);

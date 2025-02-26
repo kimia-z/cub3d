@@ -6,11 +6,14 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/28 10:43:41 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/02/26 17:16:40 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
+
+//the temp returns null or direction to game->no/so/ea/we
+//it is freed in clean.c
 
 char	*skip_space(char *str)
 {
@@ -26,7 +29,7 @@ char	*skip_space(char *str)
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
 	len = ft_strlen(&str[i]);
-	temp = malloc(sizeof(char) * len);//check if it needs to be freed later
+	temp = malloc(sizeof(char) * len);
 	if (!temp)
 		return (NULL);
 	ft_strlcpy(temp, &str[i], len);
@@ -86,8 +89,6 @@ int	fill_color(t_game *game, char *line)
 	return (0);
 }
 
-//remove this function if norminette agrees
-
 int	fill_information(t_game *game, char *line)
 {
 	if (fill_texture(game, line) != 0)
@@ -125,7 +126,6 @@ int	parse_file(char *file, t_game *game)
 		line_num++;
 		current_line = get_next_line(fd);
 	}
-	free(current_line);
 	if (game->map)
 		game->map->height = line_num - game->map->pre_start_line_num;
 	return (close(fd));
