@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   clean.c                                            :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/01/27 16:33:22 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/02/26 17:30:34 by rshaheen      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   clean.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/27 16:33:22 by rshaheen          #+#    #+#             */
+/*   Updated: 2025/02/26 17:54:35 by kziari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// void	cleaner_game(t_game *game)
-// {
-// 	if (game->wall != NULL)
-// 		free(game->wall);
-// 	if (game->plyr != NULL)
-// 		free(game->plyr);
-// 	if (game->ray != NULL)
-// 		free(game->ray);
-// 	if (game != NULL)
-// 		free(game);
-// }
 
 void	clean_texture(t_texture *texture)
 {
@@ -75,8 +63,8 @@ void	clean_all(t_game *game)
 		free(game->floor_color);
 	if (game->ceiling_color != NULL)
 		free(game->ceiling_color);
-	if (game->valid_texture)
-		clean_texture(game->valid_texture);
+	// if (game->valid_texture)
+	// 	clean_texture(game->valid_texture);
 	if (game->map)
 		clean_map(game);
 	// if (game->player)

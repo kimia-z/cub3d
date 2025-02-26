@@ -6,7 +6,7 @@
 /*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 15:49:26 by kziari            #+#    #+#             */
-/*   Updated: 2025/02/26 14:39:43 by kziari           ###   ########.fr       */
+/*   Updated: 2025/02/26 17:58:39 by kziari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ static void	move_side(t_game *game, int flag)
 		game->player->y = new_y;
 		return ;
 	}
-	else
-	{
-		printf("Hit the wall\n");
-		return ;
-	}
 }
 
 static void	move(t_game *game, int flag)
@@ -61,11 +56,6 @@ static void	move(t_game *game, int flag)
 	{
 		game->player->x = new_x;
 		game->player->y = new_y;
-		return ;
-	}
-	else
-	{
-		printf("Hit the wall\n");
 		return ;
 	}
 }
