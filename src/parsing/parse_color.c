@@ -24,7 +24,7 @@ size_t	count_arr_elements(char **arr)
 	return (i);
 }
 
-//32-bit integer = data type.
+//32-bit integer = game type.
 //Decimal = number system
 //hexadecimal = number system
 
@@ -40,12 +40,12 @@ size_t	count_arr_elements(char **arr)
 //because every number needs to be specifically positioned in a 32-bit number
 // | (bitwise OR) operator combines all the shifted values into 1 32-bit number.
 
-static int	get_rgb(int r, int g, int b, int a)
+int	get_rgb(int r, int g, int b, int a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-int	get_colors(t_game_config *data, char **color_num, char **line_elmn)
+int	get_colors(t_game *game, char **color_num, char **line_elmn)
 {
 	int		i;
 	int		number;
@@ -63,9 +63,9 @@ int	get_colors(t_game_config *data, char **color_num, char **line_elmn)
 	}
 	rgb = get_rgb(arg[0], arg[1], arg[2], 255);
 	if (!ft_strcmp(line_elmn[0], "F"))
-		data->valid_texture->floor = rgb;
+		game->valid_texture->floor = rgb;
 	else if (!ft_strcmp(line_elmn[0], "C"))
-		data->valid_texture->ceiling = rgb;
+		game->valid_texture->ceiling = rgb;
 	return (EXIT_SUCCESS);
 }
 
@@ -77,7 +77,7 @@ int	get_colors(t_game_config *data, char **color_num, char **line_elmn)
 //element 2: (the rgb values for colors)
 //split rgb values at ','; must be 3 
 
-int	parse_color(t_game_config *data, char *color_line)
+int	parse_color(t_game *game, char *color_line)
 {
 	int		i;
 	char	**color_num;
@@ -95,7 +95,7 @@ int	parse_color(t_game_config *data, char *color_line)
 	color_num = ft_split(line_elmn[1], ',');
 	if (count_arr_elements(color_num) != 3)
 		return (free_array(color_num), error_msg("Invalid color numbers\n"), 0);
-	if (!get_colors(data, color_num, line_elmn))
+	if (!get_colors(game, color_num, line_elmn))
 		return (free_array(color_num), free_array(line_elmn), 1);
 	free_array(color_num);
 	free_array(line_elmn);

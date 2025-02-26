@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
-#                                                      +:+                     #
-#    By: rshaheen <rshaheen@student.42.fr>            +#+                      #
-#                                                    +#+                       #
-#    Created: 2025/01/15 12:10:13 by rshaheen      #+#    #+#                  #
-#    Updated: 2025/01/27 16:43:52 by rshaheen      ########   odam.nl          #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: kziari <kziari@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/01/15 12:10:13 by rshaheen          #+#    #+#              #
+#    Updated: 2025/02/26 14:57:44 by kziari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,9 @@ SOURCE = src/main.c\
 			src/parsing/parse_texture_color.c\
 			src/parsing/validate_game_config.c\
 			src/parsing/validate_store_map2d.c\
+			src/execution/execution.c\
+			src/execution/hook.c\
+			src/execution/ray_casting.c
 
 OBJECTS = $(SOURCE:%.c=$(OBJ_DIR)/%.o)
 
@@ -79,6 +82,7 @@ fclean: clean
 	@$(MAKE) fclean -C ./libft
 	@rm -f $(NAME)
 	@rm -rf $(LIBMLX)/build
+	@rm -rf ./MLX42
 	@echo "CUB3D REMOVED"
 
 re: fclean all

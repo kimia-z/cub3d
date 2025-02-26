@@ -15,10 +15,10 @@
 //parse_map_line verifies if a line in the .cub file is a valid map line
 //Ensures lines only contain valid characters (0-9, N, S, E, W).
 //Handles whitespace by trimming the line.
-//Initializes the data->map structure if it's not already allocated and 
+//Initializes the game->map structure if it's not already allocated and 
 //sets the (pre_start_line_num) to the current line number
 
-bool	parse_map_line(char *current_line, int line_num, t_game_config *data)
+bool	parse_map_line(char *current_line, int line_num, t_game *game)
 {
 	int		i;
 	char	*temp;
@@ -29,12 +29,12 @@ bool	parse_map_line(char *current_line, int line_num, t_game_config *data)
 		i++;
 	if (ft_strlen(temp) == 0 || (!ft_isdigit(temp[i]) && temp[i] != '\0'))
 		return (free(temp), false);
-	if (!data->map)
+	if (!game->map)
 	{
-		data->map = ft_calloc(1, sizeof(t_map));//check to free
-		if (!data->map)
-			return (error_msg("Malloc fail for data->map"), false);
-		data->map->pre_start_line_num = line_num;
+		game->map = ft_calloc(1, sizeof(t_map));//check to free
+		if (!game->map)
+			return (error_msg("Malloc fail for game->map"), false);
+		game->map->pre_start_line_num = line_num;
 	}
 	return (free(temp), true);
 }

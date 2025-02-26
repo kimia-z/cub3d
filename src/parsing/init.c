@@ -12,14 +12,14 @@
 
 #include "../cub3d.h"
 
-void	init_config(t_game_config *data)
+void	init_config(t_game *game)
 {
-	data->no = NULL;
-	data->so = NULL;
-	data->we = NULL;
-	data->ea = NULL;
-	data->floor_color = NULL;
-	data->ceiling_color = NULL;
-	data->valid_texture = NULL;
-	data->map = NULL;
+	game->no = NULL;
+	game->so = NULL;
+	game->we = NULL;
+	game->ea = NULL;
+	game->floor_color = NULL;
+	game->ceiling_color = NULL;
+	game->valid_texture = NULL;
+	game->map = NULL;
 }

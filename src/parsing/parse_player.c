@@ -24,22 +24,22 @@ char	is_player_dir(char c)
 //(using a pointer like &column)
 //so the changes to this variable persist outside the function.
 
-bool	search_player_set_config(t_game_config *data,
+bool	search_player_set_config(t_game *game,
 				int *row, int *column, int *player_count)
 {
-	while (data->map->map2d[(*row)][(*column)])
+	while (game->map->map2d[(*row)][(*column)])
 	{
-		if (data->height_keeper == 0)
-			data->height_keeper = data->map->height;
-		if (is_player_dir(data->map->map2d[(*row)][(*column)]))
+		if (game->height_keeper == 0)
+			game->height_keeper = game->map->height;
+		if (is_player_dir(game->map->map2d[(*row)][(*column)]))
 		{
 			(*player_count)++;
 			if ((*player_count) != 1)
 				return (false);
-			data->map->player_x = (*column);
-			data->map->player_y = (*row);
-			data->map->player_facing_to = is_player_dir(
-					data->map->map2d[(*row)][(*column)]);
+			game->map->player_x = (*column);
+			game->map->player_y = (*row);
+			game->map->player_facing_to = is_player_dir(
+					game->map->map2d[(*row)][(*column)]);
 		}
 		(*column)++;
 	}
@@ -51,11 +51,11 @@ bool	search_player_set_config(t_game_config *data,
 // height++ keeps track of how many rows processed
 //meaning move to the next row
 
-void	update_map_size(t_game_config *data, int column)
+void	update_map_size(t_game *game, int column)
 {
-	if (column > data->map->width)
-		data->map->width = column;
-	data->map->height++;
+	if (column > game->map->width)
+		game->map->width = column;
+	game->map->height++;
 }
 //while iterates through every row(element of array) in map2d
 //column resets to 0 for every row//it means column
@@ -63,7 +63,7 @@ void	update_map_size(t_game_config *data, int column)
 //height marker just remembers the height
 //since we will be increasing and decreasing height here
 
-bool	parse_player(t_game_config *data)
+bool	parse_player(t_game *game)
 {
 	int	column;
 	int	row;
@@ -71,17 +71,17 @@ bool	parse_player(t_game_config *data)
 
 	row = 0;
 	player_count = 0;
-	data->height_keeper = 0;
-	while (data->map->map2d[++row])
+	game->height_keeper = 0;
+	while (game->map->map2d[++row])
 	{
 		column = 0;
 		if (search_player_set_config(
-				data, &row, &column, &player_count) == false)
+				game, &row, &column, &player_count) == false)
 			return (false);
-		update_map_size(data, column);
+		update_map_size(game, column);
 	}
 	if (player_count != 1)
 		return (false);
-	data->map->height = data->height_keeper;
+	game->map->height = game->height_keeper;
 	return (true);
 }
