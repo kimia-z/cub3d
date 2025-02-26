@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   hook.c                                              :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: kziari <marvin@42.fr>                         +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2025/02/04 15:49:26 by kziari         #+#    #+#                */
-/*   Updated: 2025/02/04 15:49:27 by kziari         ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   hook.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/04 15:49:26 by kziari            #+#    #+#             */
+/*   Updated: 2025/02/26 14:39:43 by kziari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-static int	move_side(t_game *game, int flag)
+static void	move_side(t_game *game, int flag)
 {
 	double	move_step;
 	double	new_x;
@@ -32,16 +32,16 @@ static int	move_side(t_game *game, int flag)
 	{
 		game->player->x = new_x;
 		game->player->y = new_y;
-		return (1);
+		return ;
 	}
 	else
 	{
 		printf("Hit the wall\n");
-		return (0);
+		return ;
 	}
 }
 
-static	int	move(t_game *game, int flag)
+static void	move(t_game *game, int flag)
 {
 	double	move_step;
 	double	new_x;
@@ -51,8 +51,8 @@ static	int	move(t_game *game, int flag)
 		move_step = 0.05;
 	else
 		move_step = -0.05;
-	new_x = game->player->x + game->player->x * move_step;
-	new_y = game->player->y + game->player->y * move_step;
+	new_x = game->player->x + game->player->dir_x * move_step;
+	new_y = game->player->y + game->player->dir_y * move_step;
 	if ((game->map->map2d[(int)(new_y - HITBOX)][(int)(new_x)] == '0')
 	&& (game->map->map2d[(int)(new_y)][(int)(new_x - HITBOX)] == '0')
 	&& (game->map->map2d[(int)(new_y + HITBOX)][(int)(new_x)] == '0')
@@ -61,12 +61,12 @@ static	int	move(t_game *game, int flag)
 	{
 		game->player->x = new_x;
 		game->player->y = new_y;
-		return (1);
+		return ;
 	}
 	else
 	{
 		printf("Hit the wall\n");
-		return (0);
+		return ;
 	}
 }
 
@@ -107,9 +107,5 @@ void	press_key(void *param)
 	if (mlx_is_key_down(game->init_mlx, MLX_KEY_LEFT))
 		turn(game, TURN_LEFT);
 	if (mlx_is_key_down(game->init_mlx, MLX_KEY_ESCAPE))
-	{
 		mlx_close_window(game->init_mlx);
-		//free!!
-		//exit
-	}
 }

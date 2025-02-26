@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   main.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/01/15 12:19:30 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/29 12:23:41 by rshaheen      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/15 12:19:30 by rshaheen          #+#    #+#             */
+/*   Updated: 2025/02/26 13:46:40 by kziari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	main(int argc, char **argv)
 		return (clean_all(&game), 1);
 	// print_my_map(game.map);
 	execution(&game);
+	clean_all(&game);
 }
 
 // int	main(int argc, char **argv)

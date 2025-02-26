@@ -1,22 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   start_game.c                                        :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: kziari <marvin@42.fr>                         +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2025/01/16 15:19:44 by kziari         #+#    #+#                */
-/*   Updated: 2025/01/16 15:19:46 by kziari         ########   odam.nl        */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/16 15:19:44 by kziari            #+#    #+#             */
+/*   Updated: 2025/02/26 13:46:50 by kziari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-	11111
-	10001
-	10N01
-	10001
-	11111
-*/
 
 #include "../cub3d.h"
 
@@ -59,7 +51,6 @@ t_player	*init_player(t_game *game, t_player *player)
 		player->plane_x = 0;
 		player->plane_y = -0.66;
 	}
-	
 	return(player);
 }
 
@@ -79,8 +70,7 @@ bool	assign_texture(t_game *game)
 		return (error_msg("texture loading failed: east"), false);
 	return (true);
 }
-
-void	init_textures(t_game *game)
+bool	init_textures(t_game *game)
 {
 
 	/*
@@ -91,21 +81,13 @@ void	init_textures(t_game *game)
 
 	game->valid_texture->img = mlx_new_image(game->init_mlx, WIDTH, HEIGHT);
 	if (game->valid_texture->img == NULL)
-	{
-		ft_putendl_fd((char *)mlx_strerror(mlx_errno), 2);
-		return ;
-	}
+		return (ft_putendl_fd((char *)mlx_strerror(mlx_errno), 2), false);
 	game->valid_texture->index = mlx_image_to_window(game->init_mlx, game->valid_texture->img, 0,0);
 	if (game->valid_texture->index == -1)
-	{
-		ft_putendl_fd((char *)mlx_strerror(mlx_errno), 2);
-		return ;
-	}
+		return (ft_putendl_fd((char *)mlx_strerror(mlx_errno), 2), false);
 	if (!assign_texture(game))
-	{
-		ft_putendl_fd((char *)mlx_strerror(mlx_errno), 2);
-		return ;
-	}
+		return (ft_putendl_fd((char *)mlx_strerror(mlx_errno), 2), false);
+	return(true);
 }
 
 void	execution(t_game *game)
@@ -124,25 +106,29 @@ void	execution(t_game *game)
 	game->player = malloc (sizeof(t_player));
 	if (game->player == NULL)
 	{
+		error_msg("memory allocation failed");
+		clean_all(game);
 		return ;
 	}
-	//start mlx
 	game->init_mlx = mlx_init(WIDTH, HEIGHT, "cub3d", true);
 	if (game->init_mlx == NULL)
 	{
-		//error, free, exit
-		//free?
 		ft_putendl_fd((char *)mlx_strerror(mlx_errno), 2);
+		clean_all(game);
 		return;
 	}
-	init_textures(game);
+	if (init_textures(game) == false)
+	{
+		ft_putendl_fd((char *)mlx_strerror(mlx_errno), 2);
+		clean_all(game);
+		return ;
+	}
 	game->player = init_player(game, game->player);
 	mlx_loop_hook(game->init_mlx, press_key, game);
 	mlx_loop_hook(game->init_mlx, render, game);
 	mlx_loop(game->init_mlx);
 	mlx_delete_image(game->init_mlx, game->valid_texture->img);
-	// mlx_delete_texture();
+	clean_texture(game->valid_texture);
 	mlx_close_window(game->init_mlx);
 	mlx_terminate(game->init_mlx);
-	// //ft_exit();
 }
