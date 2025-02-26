@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   clean.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 16:33:22 by rshaheen          #+#    #+#             */
-/*   Updated: 2025/02/26 14:47:33 by kziari           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   clean.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/27 16:33:22 by rshaheen      #+#    #+#                 */
+/*   Updated: 2025/02/26 17:30:34 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,10 @@ void	clean_all(t_game *game)
 		free(game->floor_color);
 	if (game->ceiling_color != NULL)
 		free(game->ceiling_color);
-	// if (game->mapa != NULL)
-	// 	free_split(game->mapa);
-	// if (game->valid_texture)
-	// 	clean_texture(game->valid_texture);
-	// if (game->map)
-	// 	clean_map(game);
+	if (game->valid_texture)
+		clean_texture(game->valid_texture);
+	if (game->map)
+		clean_map(game);
 	// if (game->player)
 	// 	free(game->player);
 	// if (game->ray)

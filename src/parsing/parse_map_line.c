@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 16:27:28 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/28 10:31:21 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/02/26 17:30:55 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	parse_map_line(char *current_line, int line_num, t_game *game)
 		return (free(temp), false);
 	if (!game->map)
 	{
-		game->map = ft_calloc(1, sizeof(t_map));//check to free
+		game->map = ft_calloc(1, sizeof(t_map));
 		if (!game->map)
 			return (error_msg("Malloc fail for game->map"), false);
 		game->map->pre_start_line_num = line_num;

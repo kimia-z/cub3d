@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 19:02:42 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/24 15:22:07 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/02/26 17:18:11 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	init_texture_struct(t_game *game)
 {
-	game->valid_texture = malloc(sizeof(t_texture));//check to free
+	game->valid_texture = malloc(sizeof(t_texture));
 	if (game->valid_texture == NULL)
 		return (error_msg("malloc failed for texture"), false);
 	game->valid_texture->floor = 0;
@@ -45,8 +45,6 @@ bool	parse_texture_n_color(t_game *game)
 {
 	if (is_texture_valid(game) == false)
 		return (error_msg("invalid texture"), false);
-	// if (assign_texture(game) == false)
-	// 	return (false);
 	if (parse_color(game, game->ceiling_color) == false
 		|| parse_color(game, game->floor_color) == false)
 		return (false);
