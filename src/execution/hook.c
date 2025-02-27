@@ -6,7 +6,7 @@
 /*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 15:49:26 by kziari            #+#    #+#             */
-/*   Updated: 2025/02/26 17:58:39 by kziari           ###   ########.fr       */
+/*   Updated: 2025/02/27 12:14:33 by kziari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,19 +70,22 @@ static void	turn(t_game *game, int flag)
 		move_step = -0.05;
 	else
 		move_step = 0.05;
-	new_plane_x = game->player->plane_x * cos(move_step) - game->player->plane_y * sin(move_step);
-	game->player->plane_y = game->player->plane_x * sin(move_step) + game->player->plane_y * cos(move_step);
-	new_x_direction = game->player->dir_x * cos(move_step) - game->player->dir_y * sin(move_step);
-	game->player->dir_y = game->player->dir_x * sin(move_step) + game->player->dir_y * cos(move_step);
+	new_plane_x = game->player->plane_x * cos(move_step)
+		- game->player->plane_y * sin(move_step);
+	game->player->plane_y = game->player->plane_x * sin(move_step)
+		+ game->player->plane_y * cos(move_step);
+	new_x_direction = game->player->dir_x * cos(move_step)
+		- game->player->dir_y * sin(move_step);
+	game->player->dir_y = game->player->dir_x * sin(move_step)
+		+ game->player->dir_y * cos(move_step);
 	game->player->plane_x = new_plane_x;
 	game->player->dir_x = new_x_direction;
 }
 
-
 void	press_key(void *param)
 {
 	t_game	*game;
-	
+
 	game = param;
 	if (mlx_is_key_down(game->init_mlx, MLX_KEY_W))
 		move(game, FORWARD);

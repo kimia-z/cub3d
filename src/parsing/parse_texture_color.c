@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_texture_color.c                              :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/01/21 19:02:42 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/02/26 17:18:11 by rshaheen      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_texture_color.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 19:02:42 by rshaheen          #+#    #+#             */
+/*   Updated: 2025/02/27 15:24:18 by kziari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 bool	init_texture_struct(t_game *game)
 {
-	game->valid_texture = malloc(sizeof(t_texture));
-	if (game->valid_texture == NULL)
+	game->texture = malloc(sizeof(t_texture));
+	if (game->texture == NULL)
 		return (error_msg("malloc failed for texture"), false);
-	game->valid_texture->floor = 0;
-	game->valid_texture->ceiling = 0;
-	game->valid_texture->ea = NULL;
-	game->valid_texture->no = NULL;
-	game->valid_texture->so = NULL;
-	game->valid_texture->we = NULL;
+	game->texture->floor = 0;
+	game->texture->ceiling = 0;
+	game->texture->ea = NULL;
+	game->texture->no = NULL;
+	game->texture->so = NULL;
+	game->texture->we = NULL;
 	return (true);
 }
 

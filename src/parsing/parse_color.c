@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   parse_color.c                                      :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2025/01/21 19:31:07 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/02/26 17:33:02 by rshaheen      ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   parse_color.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/21 19:31:07 by rshaheen          #+#    #+#             */
+/*   Updated: 2025/02/27 15:24:05 by kziari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int	get_colors(t_game *game, char **color_num, char **line_elmn)
 	}
 	rgb = get_rgb(arg[0], arg[1], arg[2], 255);
 	if (!ft_strcmp(line_elmn[0], "F"))
-		game->valid_texture->floor = rgb;
+		game->texture->floor = rgb;
 	else if (!ft_strcmp(line_elmn[0], "C"))
-		game->valid_texture->ceiling = rgb;
+		game->texture->ceiling = rgb;
 	return (EXIT_SUCCESS);
 }
 
