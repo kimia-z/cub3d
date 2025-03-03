@@ -6,7 +6,7 @@
 /*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/27 15:18:40 by kziari            #+#    #+#             */
-/*   Updated: 2025/02/27 15:33:58 by kziari           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:23:15 by kziari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,13 @@ static int	get_color(t_game *game, t_render *render, int side, int color)
 	int				pixel;
 	int				rgba[4];
 
-	texture = NULL;
-	if (side == no)
-		texture = game->texture->no;
-	else if (side == so)
-		texture = game->texture->so;
-	else if (side == we)
-		texture = game->texture->we;
-	else if (side == ea)
-		texture = game->texture->ea;
+	texture = get_texture(game, side);
 	render->tex_y = render->pos;
 	if (render->tex_y > render->tex_height)
 		render->tex_y = render->tex_height - 1;
+	if (render->tex_x < 0 || render->tex_x >= (int)texture->width
+		|| render->tex_y < 0 || render->tex_y >= (int)texture->height)
+		return (color);
 	render->pos += render->step;
 	pixel = (render->tex_x + render->tex_y * render->tex_width) * 4;
 	rgba[0] = texture->pixels[pixel];

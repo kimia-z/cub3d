@@ -6,7 +6,7 @@
 #    By: kziari <kziari@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/15 12:10:13 by rshaheen          #+#    #+#              #
-#    Updated: 2025/02/27 15:26:18 by kziari           ###   ########.fr        #
+#    Updated: 2025/03/03 14:18:40 by kziari           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ SOURCE = src/main.c\
 			src/execution/hook.c\
 			src/execution/ray_casting.c\
 			src/execution/init.c\
-			src/execution/render.c
+			src/execution/render.c\
+			src/execution/utils.c
 
 OBJECTS = $(SOURCE:%.c=$(OBJ_DIR)/%.o)
 

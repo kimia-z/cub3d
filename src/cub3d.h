@@ -6,7 +6,7 @@
 /*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 11:54:45 by rshaheen          #+#    #+#             */
-/*   Updated: 2025/02/27 15:42:50 by kziari           ###   ########.fr       */
+/*   Updated: 2025/03/03 14:17:59 by kziari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,45 +124,48 @@ typedef struct s_game
 
 }	t_game;
 
-bool		check_file_extension(char *str);
-void		init_config(t_game *game);
-int			parse_file(char *file, t_game *game);
-int			parse_color(t_game *game, char *color_line);
-bool		parse_map_line(char *current_line, int line_num, t_game *game);
-bool		parse_texture_n_color(t_game *game);
-bool		validate_game_config(char *argv, t_game *game);
-bool		validate_n_store_map2d(char *map_file, t_game *game);
-bool		parse_player(t_game *game);
-char		is_player_dir(char c);
-int			get_rgb(int r, int g, int b, int a);
+bool			check_file_extension(char *str);
+void			init_config(t_game *game);
+int				parse_file(char *file, t_game *game);
+int				parse_color(t_game *game, char *color_line);
+bool			parse_map_line(char *current_line, int line_num, t_game *game);
+bool			parse_texture_n_color(t_game *game);
+bool			validate_game_config(char *argv, t_game *game);
+bool			validate_n_store_map2d(char *map_file, t_game *game);
+bool			parse_player(t_game *game);
+char			is_player_dir(char c);
+int				get_rgb(int r, int g, int b, int a);
 
-void		error_msg(char *message);
+void			error_msg(char *message);
 
 /* Clean */
-void		clean_texture(t_texture *texture);
-void		clean_all(t_game *game);
-void		free_array(char **array);
-void		clean_game(t_game *game);
+void			clean_texture(t_texture *texture);
+void			clean_all(t_game *game);
+void			free_array(char **array);
+void			clean_game(t_game *game);
 
 //debugging
-void		print_my_map(t_map *map);
+void			print_my_map(t_map *map);
 
 /* Init */
-bool		init_all(t_game *game);
-bool		init_textures(t_game *game);
-t_player	*init_player(t_game *game, t_player *player);
+bool			init_all(t_game *game);
+bool			init_textures(t_game *game);
+t_player		*init_player(t_game *game, t_player *player);
 
 /* Hook */
-void		press_key(void *param);
+void			press_key(void *param);
 
 /* Ray casting */
-int			perform_dda(t_game *game, t_ray *ray);
-t_ray		*init_ray(t_game *game, t_ray *ray, int x);
+int				perform_dda(t_game *game, t_ray *ray);
+t_ray			*init_ray(t_game *game, t_ray *ray, int x);
 
 /* Render */
-void		render(void *param);
+void			render(void *param);
 
 /* Execution */
-void		execution(t_game *game);
+void			execution(t_game *game);
+
+/* Utils */
+mlx_texture_t	*get_texture(t_game *game, int side);
 
 #endif
