@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/02/26 17:16:40 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/10 16:21:26 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,11 @@ int	parse_file(char *file, t_game *game)
 		return (error_msg("get_next_line failed\n"), -1);
 	while (current_line != NULL)
 	{
+		parse_map_line(current_line, line_num, game);
+		if (check_png(current_line) == false)
+			return (free(current_line), -1);
 		if (fill_information(game, current_line) != 0)
 			return (free(current_line), -1);
-		parse_map_line(current_line, line_num, game);
 		free(current_line);
 		line_num++;
 		current_line = get_next_line(fd);

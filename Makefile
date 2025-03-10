@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: kziari <kziari@student.42.fr>              +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/01/15 12:10:13 by rshaheen          #+#    #+#              #
-#    Updated: 2025/03/03 14:18:40 by kziari           ###   ########.fr        #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: rshaheen <rshaheen@student.42.fr>            +#+                      #
+#                                                    +#+                       #
+#    Created: 2025/01/15 12:10:13 by rshaheen      #+#    #+#                  #
+#    Updated: 2025/03/10 16:26:08 by rshaheen      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ SOURCE = src/main.c\
 		src/error_msg.c\
 		src/clean.c\
 			src/parsing/check_file_ext.c\
+			src/parsing/check_png.c\
 			src/parsing/init.c\
 			src/parsing/parse_color.c\
 			src/parsing/parse_player.c\

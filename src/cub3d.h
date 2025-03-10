@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 11:54:45 by rshaheen          #+#    #+#             */
-/*   Updated: 2025/03/03 14:17:59 by kziari           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   cub3d.h                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/15 11:54:45 by rshaheen      #+#    #+#                 */
+/*   Updated: 2025/03/10 16:21:05 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct s_game
 bool			check_file_extension(char *str);
 void			init_config(t_game *game);
 int				parse_file(char *file, t_game *game);
+bool			check_png(char *current_line);
 int				parse_color(t_game *game, char *color_line);
 bool			parse_map_line(char *current_line, int line_num, t_game *game);
 bool			parse_texture_n_color(t_game *game);

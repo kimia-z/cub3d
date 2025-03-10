@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 16:27:28 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/02/26 17:30:55 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/10 16:25:19 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ bool	parse_map_line(char *current_line, int line_num, t_game *game)
 
 	i = 0;
 	temp = ft_strtrim(current_line, "\n\t ");
+
 	while (temp[i] && (ft_isdigit(temp[i]) || is_player_dir(temp[i])))
 		i++;
 	if (ft_strlen(temp) == 0 || (!ft_isdigit(temp[i]) && temp[i] != '\0'))
