@@ -6,96 +6,90 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/10 16:21:26 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/11 12:00:36 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-//the temp returns null or direction to game->no/so/ea/we
-//it is freed in clean.c
+//validate_all_line verifies if a line in the .cub file is a valid map line
+//Ensures lines only contain valid characters (0-9, N, S, E, W).
+//Handles whitespace by trimming the line.
+//Initializes the game->map structure if it's not already allocated and 
+//sets the (pre_start_line_num) to the current line number
 
-char	*skip_space(char *str)
+bool	validate_all_line(char *current_line, int line_num, t_game *game)
 {
-	char	*temp;
 	int		i;
-	int		len;
+	char	*temp;
 
-	i = 2;
-	if (!str)
-		return (NULL);
-	if (str[i] != ' ' && str[i] != '\t')
-		return (NULL);
-	while (str[i] == ' ' || str[i] == '\t')
+	i = 0;
+	temp = ft_strtrim(current_line, "\n\t ");
+	while (temp[i] && (ft_isdigit(temp[i]) || is_player_dir(temp[i])))
 		i++;
-	len = ft_strlen(&str[i]);
-	temp = malloc(sizeof(char) * len);
-	if (!temp)
-		return (NULL);
-	ft_strlcpy(temp, &str[i], len);
-	return (temp);
+	if (ft_strlen(temp) == 0 || (!ft_isdigit(temp[i]) && temp[i] != '\0'))
+		return (free(temp), false);
+	if (!game->map)
+	{
+		game->map = ft_calloc(1, sizeof(t_map));
+		if (!game->map)
+			return (error_msg("Malloc fail for game->map"), false);
+		game->map->pre_start_line_num = line_num;
+	}
+	return (free(temp), true);
 }
 
-/*
- * Ensures each texture is defined only once by checking if the corresponding 
- * texture pointer in t_game is NULL. If a texture is already set 
- * (i.e., not NULL), it triggers an error message to prevent overwriting 
- * previously assigned values, ensuring the integrity of the game configuration.
- */
-
-int	fill_texture(t_game *game, char *line)
+bool	is_texture_png(char *str)
 {
-	if (ft_strncmp(line, "NO", 2) == 0)
+	int	len;
+
+	if (!str)
+		return (false);
+	len = ft_strlen(str);
+	if (len < 4)
 	{
-		if (game->no != NULL)
-			return (error_msg("Duplicate texture definition: North"), 1);
-		game->no = skip_space(line);
+		error_msg("texture file invalid: filename too short\n");
+		return (false);
 	}
-	if (ft_strncmp(line, "WE", 2) == 0)
+	if (str && ft_strncmp(&str[len - 4], ".png", 4) != 0)
 	{
-		if (game->we != NULL)
-			return (error_msg("Duplicate texture definition: West"), 1);
-		game->we = skip_space(line);
+		error_msg("texture file invalid\n");
+		return (false);
 	}
-	else if (ft_strncmp(line, "SO", 2) == 0)
-	{
-		if (game->so != NULL)
-			return (error_msg("Duplicate texture definition: South"), 1);
-		game->so = skip_space(line);
-	}
-	else if (ft_strncmp(line, "EA", 2) == 0)
-	{
-		if (game->ea != NULL)
-			return (error_msg("Duplicate texture definition: East"), 1);
-		game->ea = skip_space(line);
-	}
-	return (0);
+	return (true);
 }
 
-int	fill_color(t_game *game, char *line)
-{
-	if (ft_strncmp(line, "F", 1) == 0)
-	{
-		if (game->floor_color != NULL)
-			return (error_msg("Duplicate color definition: floor\n"), 1);
-		game->floor_color = ft_strdup(line);
-	}
-	else if (ft_strncmp(line, "C", 1) == 0)
-	{
-		if (game->ceiling_color != NULL)
-			return (error_msg("Duplicate color definition; ceiling\n"), 1);
-		game->ceiling_color = ft_strdup(line);
-	}
-	return (0);
-}
+//for checking png, first remove trailing newlines/tabs
+//then if the line begins with SO/EA/NO/WE--
+////we check if it is only SO/EA/NO/WE and nothing sfterwords--
+// then extract texture path and see if png
 
-int	fill_information(t_game *game, char *line)
+bool	check_png(char *current_line)
 {
-	if (fill_texture(game, line) != 0)
-		return (1);
-	if (fill_color(game, line) != 0)
-		return (1);
-	return (0);
+	int		i;
+	char	*temp;
+	char	*texture_path;
+
+	i = 0;
+	temp = ft_strtrim(current_line, "\n\t ");
+	if (ft_strncmp(temp, "SO", 2) == 0 || ft_strncmp(temp, "NO", 2) == 0
+		|| ft_strncmp(temp, "WE", 2) == 0 || ft_strncmp(temp, "EA", 2) == 0)
+	{
+		if (ft_strlen(temp) <= 2)
+		{
+			free(temp);
+			return (error_msg("texture file not found\n"), false);
+		}
+		texture_path = ft_strtrim(temp + 2, "\n\t ");
+		if (!is_texture_png(texture_path))
+		{
+			free(temp);
+			free(texture_path);
+			return (false);
+		}
+		free(texture_path);
+	}
+	return (free(temp), true);
 }
 // Opens the file and reads it line by line using get_next_line.
 // Processes each line to fill game configuration game (textures, colors, etc.).
@@ -119,10 +113,10 @@ int	parse_file(char *file, t_game *game)
 		return (error_msg("get_next_line failed\n"), -1);
 	while (current_line != NULL)
 	{
-		parse_map_line(current_line, line_num, game);
+		validate_all_line(current_line, line_num, game);
 		if (check_png(current_line) == false)
 			return (free(current_line), -1);
-		if (fill_information(game, current_line) != 0)
+		if (fill_info(game, current_line) != 0)
 			return (free(current_line), -1);
 		free(current_line);
 		line_num++;

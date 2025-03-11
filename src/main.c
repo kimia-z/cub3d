@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 12:19:30 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/10 14:39:56 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/11 09:54:59 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv)
 	if (parse_file(argv[1], &game) == -1)
 		return (1);
 	if (parse_texture_n_color(&game) == false)
-		return (error_msg("parse texture false\n"), clean_all(&game), 1);
+		return (clean_all(&game), 1);
 	if (validate_game_config(argv[1], &game) == false)
 		return (clean_all(&game), 1);
 	execution(&game);

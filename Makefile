@@ -6,7 +6,7 @@
 #    By: rshaheen <rshaheen@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2025/01/15 12:10:13 by rshaheen      #+#    #+#                  #
-#    Updated: 2025/03/10 16:26:08 by rshaheen      ########   odam.nl          #
+#    Updated: 2025/03/11 11:50:22 by rshaheen      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,12 +28,11 @@ SOURCE = src/main.c\
 		src/error_msg.c\
 		src/clean.c\
 			src/parsing/check_file_ext.c\
-			src/parsing/check_png.c\
 			src/parsing/init.c\
+			src/parsing/fill_info.c\
 			src/parsing/parse_color.c\
 			src/parsing/parse_player.c\
 			src/parsing/parse_file.c\
-			src/parsing/parse_map_line.c\
 			src/parsing/parse_texture_color.c\
 			src/parsing/validate_game_config.c\
 			src/parsing/validate_store_map2d.c\
