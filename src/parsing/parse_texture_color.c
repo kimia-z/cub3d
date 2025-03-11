@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_texture_color.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/21 19:02:42 by rshaheen          #+#    #+#             */
-/*   Updated: 2025/02/27 15:24:18 by kziari           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parse_texture_color.c                              :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/21 19:02:42 by rshaheen      #+#    #+#                 */
+/*   Updated: 2025/03/11 14:19:48 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,18 @@ bool	is_texture_valid(t_game *game)
 
 bool	parse_texture_n_color(t_game *game)
 {
+	int32_t	floor_rgb;
+	int32_t	ceiling_rgb;
+
 	if (is_texture_valid(game) == false)
 		return (error_msg("invalid texture"), false);
-	if (parse_color(game, game->ceiling_color) == false
-		|| parse_color(game, game->floor_color) == false)
+	floor_rgb = parse_color(game->floor_color);
+	if (floor_rgb == -1)
 		return (false);
+	game->texture->floor = floor_rgb;
+	ceiling_rgb = parse_color(game->ceiling_color);
+	if (ceiling_rgb == -1)
+		return (false);
+	game->texture->ceiling = ceiling_rgb;
 	return (true);
 }
