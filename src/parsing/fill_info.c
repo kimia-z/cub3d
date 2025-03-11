@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 11:43:31 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/11 11:45:16 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/11 12:12:09 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*extract_texture_path(char *str)
  * previously assigned values, ensuring the integrity of the game configuration.
  */
 
-int	fill_texture(t_game *game, char *line)
+int	fill_texture_path(t_game *game, char *line)
 {
 	if (ft_strncmp(line, "NO", 2) == 0)
 	{
@@ -70,7 +70,7 @@ int	fill_texture(t_game *game, char *line)
 	return (0);
 }
 
-int	fill_color(t_game *game, char *line)
+int	fill_color_line(t_game *game, char *line)
 {
 	if (ft_strncmp(line, "F", 1) == 0)
 	{
@@ -89,9 +89,9 @@ int	fill_color(t_game *game, char *line)
 
 int	fill_info(t_game *game, char *line)
 {
-	if (fill_texture(game, line) != 0)
+	if (fill_texture_path(game, line) != 0)
 		return (1);
-	if (fill_color(game, line) != 0)
+	if (fill_color_line(game, line) != 0)
 		return (1);
 	return (0);
 }
