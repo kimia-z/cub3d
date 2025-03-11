@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 19:31:07 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/11 16:21:39 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/11 16:27:42 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int32_t	get_colors(char **color_num)
 		j = 0;
 		while (color_num[i][j])
 		{
-			if (!ft_isdigit(color_num[i][j]) || color_num[i][j] == ',')
+			if (!ft_isdigit(color_num[i][j]))
 				return (error_msg("Invalid characters in RGB values\n"), -1);
 			j++;
 		}
