@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 19:02:42 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/11 14:19:48 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/12 15:27:26 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	parse_texture_n_color(t_game *game)
 	int32_t	ceiling_rgb;
 
 	if (is_texture_valid(game) == false)
-		return (error_msg("invalid texture"), false);
+		return (error_msg("invalid map content\n"), false);
 	floor_rgb = parse_color(game->floor_color);
 	if (floor_rgb == -1)
 		return (false);
