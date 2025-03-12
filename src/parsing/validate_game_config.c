@@ -6,16 +6,16 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 18:51:09 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/10 13:33:40 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/12 16:06:21 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-//is_config_full is checking if all variables in the t_game struct r set
+//is_struct_full is checking if all variables in the t_game struct r set
 //meaning (non-zero or non-NULL).
 
-int	is_config_full(t_game *game)
+int	is_struct_full(t_game *game)
 {
 	if (game->ceiling_color == 0)
 		return (error_msg("missing ceiling color\n"), false);
@@ -102,7 +102,7 @@ bool	validate_game_config(char *map_file, t_game *game)
 {
 	t_map	*temp_map;
 
-	if (is_config_full(game) == false)
+	if (is_struct_full(game) == false)
 		return (error_msg("missing config info\n"), false);
 	if (validate_n_store_map2d(map_file, game) == false)
 		return (false);
