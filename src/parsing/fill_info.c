@@ -6,18 +6,17 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 11:43:31 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/11 12:13:33 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/12 12:50:07 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-//the temp returns null or texture_path
-//it is freed in clean.c
+//texture_path is freed in clean.c
 
-char	*extract_texture_path(char *str)
+char	*allocate_texture_path(char *str)
 {
-	char	*temp;
+	char	*texture_path;
 	int		i;
 	int		len;
 
@@ -27,11 +26,11 @@ char	*extract_texture_path(char *str)
 	while (str[i] == ' ' || str[i] == '\t')
 		i++;
 	len = ft_strlen(&str[i]);
-	temp = malloc(sizeof(char) * len);
-	if (!temp)
+	texture_path = malloc(sizeof(char) * len);
+	if (!texture_path)
 		return (NULL);
-	ft_strlcpy(temp, &str[i], len);
-	return (temp);
+	ft_strlcpy(texture_path, &str[i], len);
+	return (texture_path);
 }
 
 /*
@@ -47,25 +46,25 @@ int	fill_texture_path(t_game *game, char *line)
 	{
 		if (game->no != NULL)
 			return (error_msg("Duplicate texture definition: North"), 1);
-		game->no = extract_texture_path(line);
+		game->no = allocate_texture_path(line);
 	}
 	if (ft_strncmp(line, "WE", 2) == 0)
 	{
 		if (game->we != NULL)
 			return (error_msg("Duplicate texture definition: West"), 1);
-		game->we = extract_texture_path(line);
+		game->we = allocate_texture_path(line);
 	}
 	else if (ft_strncmp(line, "SO", 2) == 0)
 	{
 		if (game->so != NULL)
 			return (error_msg("Duplicate texture definition: South"), 1);
-		game->so = extract_texture_path(line);
+		game->so = allocate_texture_path(line);
 	}
 	else if (ft_strncmp(line, "EA", 2) == 0)
 	{
 		if (game->ea != NULL)
 			return (error_msg("Duplicate texture definition: East"), 1);
-		game->ea = extract_texture_path(line);
+		game->ea = allocate_texture_path(line);
 	}
 	return (0);
 }

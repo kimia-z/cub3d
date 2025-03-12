@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/11 12:00:36 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/12 12:58:04 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ bool	validate_all_line(char *current_line, int line_num, t_game *game)
 
 	i = 0;
 	temp = ft_strtrim(current_line, "\n\t ");
+	if (!temp)
+		return (false);
 	while (temp[i] && (ft_isdigit(temp[i]) || is_player_dir(temp[i])))
 		i++;
 	if (ft_strlen(temp) == 0 || (!ft_isdigit(temp[i]) && temp[i] != '\0'))
@@ -59,34 +61,35 @@ bool	is_texture_png(char *str)
 	return (true);
 }
 
-//for checking png, first remove trailing newlines/tabs
-//then if the line begins with SO/EA/NO/WE--
-////we check if it is only SO/EA/NO/WE and nothing sfterwords--
-// then extract texture path and see if png
+//if it is a texture line begins with identifier (SO/EA/NO/WE) we enter block
+//remove "trailing" newlines/tabs becuse for cases like .png\n
+////If we have nothing after identifier or if there is no space/tab after it
+//////exit
 
-bool	check_png(char *current_line)
+bool	validate_texture_line(char *line)
 {
 	int		i;
 	char	*temp;
 	char	*texture_path;
 
 	i = 0;
-	temp = ft_strtrim(current_line, "\n\t ");
-	if (ft_strncmp(temp, "SO", 2) == 0 || ft_strncmp(temp, "NO", 2) == 0
-		|| ft_strncmp(temp, "WE", 2) == 0 || ft_strncmp(temp, "EA", 2) == 0)
+	temp = NULL;
+	if ((ft_strncmp(line, "SO", 2) == 0 || ft_strncmp(line, "NO", 2) == 0
+			|| ft_strncmp(line, "WE", 2) == 0
+			|| ft_strncmp(line, "EA", 2) == 0))
 	{
+		temp = ft_strtrim(line, "\n\t ");
+		if (!temp)
+			return (error_msg("malloc failed for ft_strtrim\n"), false);
 		if (ft_strlen(temp) <= 2)
-		{
-			free(temp);
-			return (error_msg("texture file not found\n"), false);
-		}
+			return (free(temp), error_msg("texture file not found\n"), false);
+		if (temp[2] != ' ' && temp[2] != '\t')
+			return (free(temp), error_msg("texture line misaligned\n"), false);
 		texture_path = ft_strtrim(temp + 2, "\n\t ");
+		if (!texture_path)
+			return (free(temp), false);
 		if (!is_texture_png(texture_path))
-		{
-			free(temp);
-			free(texture_path);
-			return (false);
-		}
+			return (free(temp), free(texture_path), false);
 		free(texture_path);
 	}
 	return (free(temp), true);
@@ -114,7 +117,7 @@ int	parse_file(char *file, t_game *game)
 	while (current_line != NULL)
 	{
 		validate_all_line(current_line, line_num, game);
-		if (check_png(current_line) == false)
+		if (validate_texture_line(current_line) == false)
 			return (free(current_line), -1);
 		if (fill_info(game, current_line) != 0)
 			return (free(current_line), -1);
