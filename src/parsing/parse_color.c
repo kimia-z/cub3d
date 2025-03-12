@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 19:31:07 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/11 16:27:42 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/12 13:19:02 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,8 @@ int32_t	get_colors(char **color_num)
 		j = 0;
 		while (color_num[i][j])
 		{
-			if (!ft_isdigit(color_num[i][j]))
+			if (!ft_isdigit(color_num[i][j]) && (color_num[i][j] != ' ')
+			&& (color_num[i][j] != '\t'))
 				return (error_msg("Invalid characters in RGB values\n"), -1);
 			j++;
 		}
@@ -88,10 +89,10 @@ int	parse_color(char *color_line)
 		return (error_msg("missing color string"), -1);
 	trimmed_line = ft_strtrim(color_line, " \tFC\n ");
 	if (!trimmed_line)
-		return (error_msg("memory allocation for trim color failed"), -1);
+		return (error_msg("memory allocation for trim color failed\n"), -1);
 	splitted_color_num = ft_split(trimmed_line, ',');
 	if (!splitted_color_num)
-		return (error_msg("split failed for splitted_color_num"), -1);
+		return (error_msg("color line misconfiguration\n"), -1);
 	free (trimmed_line);
 	if (count_arr_elements(splitted_color_num) != 3)
 	{

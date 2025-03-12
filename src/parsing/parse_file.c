@@ -6,19 +6,20 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/12 12:58:04 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/12 14:45:17 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-//validate_all_line verifies if a line in the .cub file is a valid map line
-//Ensures lines only contain valid characters (0-9, N, S, E, W).
-//Handles whitespace by trimming the line.
+//validate_2dmap_line verifies the lines of 2D map
+//fisrt it trims whitespace from all received lines
+//Then it updates temp lines using while loop so that temp---
+//Only contain valid characters (0-9, N, S, E, W) for 2Dmap
 //Initializes the game->map structure if it's not already allocated and 
 //sets the (pre_start_line_num) to the current line number
 
-bool	validate_all_line(char *current_line, int line_num, t_game *game)
+bool	validate_2dmap_line(char *current_line, int line_num, t_game *game)
 {
 	int		i;
 	char	*temp;
@@ -95,6 +96,10 @@ bool	validate_texture_line(char *line)
 	return (free(temp), true);
 }
 // Opens the file and reads it line by line using get_next_line.
+// if we read a line (non-null)
+// Check if the line contains only empty spaces or tabs by while
+//// break loop as we encounter non-whitespace characters
+// If we reached the end and no non-whitespace characters were found
 // Processes each line to fill game configuration game (textures, colors, etc.).
 // Identifies and processes map lines, initializing map game if required.
 // Ensures all lines are parsed before calculating the map's height.
@@ -113,10 +118,10 @@ int	parse_file(char *file, t_game *game)
 		return (error_msg("cannot open file\n"), -1);
 	current_line = get_next_line(fd);
 	if (current_line == NULL)
-		return (error_msg("get_next_line failed\n"), -1);
+		return (error_msg("read file failed\n"), -1);
 	while (current_line != NULL)
 	{
-		validate_all_line(current_line, line_num, game);
+		validate_2dmap_line(current_line, line_num, game);
 		if (validate_texture_line(current_line) == false)
 			return (free(current_line), -1);
 		if (fill_info(game, current_line) != 0)

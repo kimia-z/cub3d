@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/03/11 11:43:31 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/12 12:50:07 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/12 13:38:36 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,16 @@ int	fill_color_line(t_game *game, char *line)
 		if (game->floor_color != NULL)
 			return (error_msg("Duplicate color definition: floor\n"), 1);
 		game->floor_color = ft_strdup(line);
+		if (!game->floor_color)
+			return (error_msg ("ft_strdup failed for floor_color\n"), 1);
 	}
 	else if (ft_strncmp(line, "C", 1) == 0)
 	{
 		if (game->ceiling_color != NULL)
 			return (error_msg("Duplicate color definition; ceiling\n"), 1);
 		game->ceiling_color = ft_strdup(line);
+		if (!game->ceiling_color)
+			return (error_msg("ft_strdup failed for ceiling_color\n"), 1);
 	}
 	return (0);
 }
