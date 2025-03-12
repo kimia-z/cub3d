@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 19:31:07 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/12 13:19:02 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/12 15:42:19 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	parse_color(char *color_line)
 	rgb = 0;
 	if (!color_line)
 		return (error_msg("missing color string"), -1);
-	trimmed_line = ft_strtrim(color_line, " \tFC\n ");
+	trimmed_line = ft_strtrim(color_line, "FC\n");
 	if (!trimmed_line)
 		return (error_msg("memory allocation for trim color failed\n"), -1);
 	splitted_color_num = ft_split(trimmed_line, ',');
@@ -96,7 +96,7 @@ int	parse_color(char *color_line)
 	free (trimmed_line);
 	if (count_arr_elements(splitted_color_num) != 3)
 	{
-		error_msg("wrong number of colors for making rgb\n");
+		error_msg("color line misconfiguration\n");
 		return (free_array(splitted_color_num), -1);
 	}
 	rgb = get_colors(splitted_color_num);
