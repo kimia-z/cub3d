@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/12 15:17:48 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/17 15:47:59 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,20 @@
 //Only contain valid characters (0-9, N, S, E, W) for 2Dmap
 //Initializes the game->map structure if it's not already allocated and 
 //sets the (pre_start_line_num) to the current line number
+
+bool	is_2d_map_line(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (ft_isdigit(line[i]) || is_player_dir(line[i]))
+			return (true);
+		i++;
+	}
+	return (false);
+}
 
 bool	validate_2dmap_line(char *current_line, int line_num, t_game *game)
 {
@@ -117,20 +131,20 @@ int	parse_file(char *file, t_game *game)
 	if (fd == -1)
 		return (error_msg("cannot open file\n"), -1);
 	current_line = get_next_line(fd);
-	if (current_line == NULL)
-		return (error_msg("read file failed\n"), -1);
 	while (current_line != NULL)
 	{
-		validate_2dmap_line(current_line, line_num, game);
-		if (validate_texture_line(current_line) == false)
-			return (free(current_line), -1);
-		if (fill_info(game, current_line) != 0)
-			return (free(current_line), -1);
-		free(current_line);
+		if (is_2d_map_line(current_line) == true)
+			validate_2dmap_line(current_line, line_num, game);
+		if (validate_texture_line(current_line) == false
+			|| fill_info(game, current_line) != 0)
+			return (free(current_line), close(fd), -1);
+		(free(current_line), current_line = get_next_line(fd));
 		line_num++;
-		current_line = get_next_line(fd);
 	}
-	if (game->map)
+	if (game->map && game->map->pre_start_line_num >= 0
+		&& line_num > game->map->pre_start_line_num)
 		game->map->height = line_num - game->map->pre_start_line_num;
+	else
+		return (error_msg("2D map is missing\n"), -1);
 	return (close(fd));
 }

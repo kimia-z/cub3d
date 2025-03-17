@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 18:51:09 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/12 16:06:21 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/17 13:17:29 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ int	flood_fill(t_map *map, int r, int y, int x)
 	if (map->map2d[y][x] && (map->map2d[y][x] == '1' \
 		|| map->map2d[y][x] == '2'))
 		return (0);
-	if ((y > map->height || y < 0)
+	if ((y >= map->height || y < 0)
 		|| (x >= (int)ft_strlen(map->map2d[y]) || x < 0))
 		return (error_msg("out of bounds or broken wall\n"), EXIT_FAILURE);
-	if (map->map2d[y][x] != '1'
-		&& map->map2d[y][x] != '2' && map->map2d[y][x] != '0')
+	if (map->map2d[y][x] != '1' && map->map2d[y][x] != '2'
+		&& map->map2d[y][x] != ' ' && map->map2d[y][x] != '0')
 		return (error_msg("unexpected value encountered\n"), 1);
 	map->map2d[y][x] = '2';
 	if (flood_fill(map, r, y, x + 1) == EXIT_FAILURE
@@ -107,7 +107,7 @@ bool	validate_game_config(char *map_file, t_game *game)
 	if (validate_n_store_map2d(map_file, game) == false)
 		return (false);
 	if (parse_player(game) == false)
-		return (error_msg("Player not found"), false);
+		return (error_msg("invalid player\n"), false);
 	temp_map = copy_map(game->map);
 	temp_map->map2d[temp_map->player_y][temp_map->player_x] = '0';
 	if (flood_fill(temp_map, 0, temp_map->player_y, temp_map->player_x))

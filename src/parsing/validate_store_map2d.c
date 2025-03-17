@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/24 15:56:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/12 16:24:27 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/17 13:55:21 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 static void	skip_to_map_start(t_game *game, char *temp, int i, int fd)
 {
-	while (i < game->map->pre_start_line_num)
+	while (i++ < game->map->pre_start_line_num)
 	{
+		printf("%d\n", game->map->pre_start_line_num);
 		temp = get_next_line(fd);
+		if (!temp)
+			break ;
 		free(temp);
-		i++;
 	}
 }
-//space is validated as a char here
+//space is VALIDATED as a char here
 
 static int	is_valid_char(char *str)
 {
@@ -29,11 +31,12 @@ static int	is_valid_char(char *str)
 	int		i;
 
 	valid = "01NSEW\n ";
-	i = -1;
-	while (str[++i])
+	i = 0;
+	while (str[i])
 	{
 		if (!ft_strchr(valid, str[i]))
 			return (1);
+		i++;
 	}
 	return (0);
 }
