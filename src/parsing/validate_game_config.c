@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 18:51:09 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/18 12:38:00 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/18 16:29:19 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ int	flood_fill(t_map *map, int r, int y, int x)
 	if (map->map2d[map->height - 1]
 		&& ft_strchr(map->map2d[map->height - 1], '0'))
 		return (error_msg("broken wall at bottom"), EXIT_FAILURE);
-	if ((y >= map->height || y < 0)
-		|| (x >= map->width || x < 0))
-		return (error_msg("out of bounds or broken wall\n"), EXIT_FAILURE);
 	if (!map->map2d[y] || ft_strlen(map->map2d[y]) == 0)
 		return (error_msg("empty row encountered"), EXIT_FAILURE);
+	if ((y >= map->height || y < 0)
+		|| (x >= (int)ft_strlen(map->map2d[y]) || x < 0))
+		return (error_msg("out of bounds or broken wall\n"), EXIT_FAILURE);
 	if (map->map2d[y][x] && (map->map2d[y][x] == '1' \
-		|| map->map2d[y][x] == '2'))
+		|| map->map2d[y][x] == '2' || map->map2d[y][x] == ' '))
 		return (0);
 	if (map->map2d[y][x] != '1' && map->map2d[y][x] != '2'
 		&& map->map2d[y][x] != ' ' && map->map2d[y][x] != '0')
