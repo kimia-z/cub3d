@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 11:54:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/11 14:21:22 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/18 11:19:46 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,13 +127,14 @@ typedef struct s_game
 bool			check_file_extension(char *str);
 void			init_config(t_game *game);
 int				parse_file(char *file, t_game *game);
-int				fill_info(t_game *game, char *line);
+int				assign_input(t_game *game, char *line);
 int				parse_color(char *color_line);
 bool			parse_texture_n_color(t_game *game);
 bool			validate_game_config(char *argv, t_game *game);
 bool			validate_n_store_map2d(char *map_file, t_game *game);
 bool			parse_player(t_game *game);
 char			is_player_dir(char c);
+int				is_valid_char(char *str);
 int				get_rgb(int r, int g, int b, int a);
 
 void			error_msg(char *message);

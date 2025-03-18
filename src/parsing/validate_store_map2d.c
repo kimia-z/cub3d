@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/24 15:56:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/17 16:03:23 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/18 11:19:10 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	skip_to_map_start(t_game *game, char *temp, int i, int fd)
 }
 //space is VALIDATED as a char here
 
-static int	is_valid_char(char *str)
+int	is_valid_char(char *str)
 {
 	char	*valid;
 	int		i;

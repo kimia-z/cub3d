@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/18 10:47:53 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/18 11:46:50 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ bool	allocate_2dmap_line(char *current_line, int line_num, t_game *game)
 		return (false);
 	while (temp[i] && (ft_isdigit(temp[i]) || is_player_dir(temp[i])))
 		i++;
-	if (temp[i] != '\0' && (ft_strlen(temp) == 0 || !ft_isdigit(temp[i])
-			|| !is_player_dir(temp[i])))
-		return (error_msg("invalid char in 2dmap\n"),free(temp), false);
+	if (ft_strlen(temp) == 0 || (!ft_isdigit(temp[i]) && temp[i] != '\0'))
+		return (free(temp), false);
 	if (!game->map)
 	{
 		game->map = ft_calloc(1, sizeof(t_map));
@@ -133,12 +132,9 @@ int	parse_file(char *file, t_game *game)
 	while (current_line != NULL)
 	{
 		if (is_2d_map_line(current_line) == true)
-		{
-			if (allocate_2dmap_line(current_line, line_num, game) == false)
-				return (free(current_line), close(fd), -1);
-		}
+			allocate_2dmap_line(current_line, line_num, game);
 		if (validate_texture_line(current_line) == false
-			|| fill_info(game, current_line) != 0)
+			|| assign_input(game, current_line) != 0)
 			return (free(current_line), close(fd), -1);
 		(free(current_line), current_line = get_next_line(fd));
 		line_num++;

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   fill_info.c                                        :+:    :+:            */
+/*   assign_input.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
@@ -90,7 +90,7 @@ int	fill_color_line(t_game *game, char *line)
 	return (0);
 }
 
-int	fill_info(t_game *game, char *line)
+int	assign_input(t_game *game, char *line)
 {
 	if (fill_texture_path(game, line) != 0)
 		return (1);
