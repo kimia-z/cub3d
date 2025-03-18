@@ -6,32 +6,33 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/18 11:46:50 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/18 14:08:56 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-bool	is_2d_map_line(char *line)
+static int	handle_invalid_line(char *temp)
 {
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (ft_isdigit(line[i]) || is_player_dir(line[i]))
-			return (true);
-		i++;
-	}
-	return (false);
+	if (temp[0] == 'F' || temp[0] == 'C' || temp[0] == 'N' || temp[0] == 'S'
+		|| temp[0] == 'W' || temp[0] == 'E'
+		|| (temp[0] == 'S' && temp[1] == 'O')
+		|| (temp[0] == 'N' && temp[1] == 'O')
+		|| (temp[0] == 'E' && temp[1] == 'A')
+		|| (temp[0] == 'W' && temp[1] == 'E'))
+		return (free(temp), 0);
+	else
+		return (error_msg("invalid chars in map"), free(temp), -1);
 }
+
 //fisrt it trims whitespace from all received lines
-//Then it updates temp lines using while loop so that temp---
-//Only contain valid characters (0-9, N, S, E, W) for 2Dmap
-//Initializes the game->map structure if it's not already allocated and 
+//it skips temp lines that has
+//valid characters (0-9, N, S, E, W) for 2Dmap
+//handles invalid lines
 //sets the (pre_start_line_num) to the current line number
 
-bool	allocate_2dmap_line(char *current_line, int line_num, t_game *game)
+
+int	allocate_2dmap_line(char *current_line, int line_num, t_game *game)
 {
 	int		i;
 	char	*temp;
@@ -39,16 +40,19 @@ bool	allocate_2dmap_line(char *current_line, int line_num, t_game *game)
 	i = 0;
 	temp = ft_strtrim(current_line, "\n\t ");
 	if (!temp)
-		return (false);
-	while (temp[i] && (ft_isdigit(temp[i]) || is_player_dir(temp[i])))
+		return (-1);
+	while (temp[i] && (ft_isdigit(temp[i]) || is_player_dir(temp[i])
+			|| temp[i] == ' '))
 		i++;
-	if (ft_strlen(temp) == 0 || (!ft_isdigit(temp[i]) && temp[i] != '\0'))
-		return (free(temp), false);
+	if (temp[i] != '\0')
+		return (handle_invalid_line(temp));
+	if (ft_strlen(temp) == 0)
+		return (free(temp), 0);
 	if (!game->map)
 	{
 		game->map = ft_calloc(1, sizeof(t_map));
 		if (!game->map)
-			return (error_msg("Malloc fail for game->map"), false);
+			return (error_msg("Malloc fail for game->map"), -1);
 		game->map->pre_start_line_num = line_num;
 	}
 	return (free(temp), true);
@@ -109,14 +113,9 @@ bool	validate_texture_line(char *line)
 }
 // Opens the file and reads it line by line using get_next_line.
 // if we read a line (non-null)
-// Check if the line contains only empty spaces or tabs by while
-//// break loop as we encounter non-whitespace characters
-// If we reached the end and no non-whitespace characters were found
+// process and allocate 2d map line if valid
 // Processes each line to fill game configuration game (textures, colors, etc.).
-// Identifies and processes map lines, initializing map game if required.
-// Ensures all lines are parsed before calculating the map's height.
-// get_next_line returns NULL at EOF, ensuring no partial height calculation.
-// Closes the file descriptor after processing all lines.
+// calculate height
 
 int	parse_file(char *file, t_game *game)
 {
@@ -131,8 +130,8 @@ int	parse_file(char *file, t_game *game)
 	current_line = get_next_line(fd);
 	while (current_line != NULL)
 	{
-		if (is_2d_map_line(current_line) == true)
-			allocate_2dmap_line(current_line, line_num, game);
+		if (allocate_2dmap_line(current_line, line_num, game) == -1)
+			return (free(current_line), close(fd), -1);
 		if (validate_texture_line(current_line) == false
 			|| assign_input(game, current_line) != 0)
 			return (free(current_line), close(fd), -1);
@@ -143,6 +142,6 @@ int	parse_file(char *file, t_game *game)
 		&& line_num > game->map->pre_start_line_num)
 		game->map->height = line_num - game->map->pre_start_line_num;
 	else
-		return (error_msg("2D map is missing\n"), -1);
+		return (error_msg("2D map is missing\n"), close(fd), -1);
 	return (close(fd));
 }

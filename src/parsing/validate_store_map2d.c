@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/24 15:56:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/18 11:19:10 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/18 12:24:56 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	skip_to_map_start(t_game *game, char *temp, int i, int fd)
 
 int	is_valid_char(char *str)
 {
-	char	*valid;
-	int		i;
+	const char	*valid;
+	int			i;
 
 	valid = "01NSEW\n ";
 	i = 0;
