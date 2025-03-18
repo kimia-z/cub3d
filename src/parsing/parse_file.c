@@ -6,18 +6,11 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/17 15:47:59 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/18 10:47:53 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
-
-//validate_2dmap_line verifies the lines of 2D map
-//fisrt it trims whitespace from all received lines
-//Then it updates temp lines using while loop so that temp---
-//Only contain valid characters (0-9, N, S, E, W) for 2Dmap
-//Initializes the game->map structure if it's not already allocated and 
-//sets the (pre_start_line_num) to the current line number
 
 bool	is_2d_map_line(char *line)
 {
@@ -32,8 +25,13 @@ bool	is_2d_map_line(char *line)
 	}
 	return (false);
 }
+//fisrt it trims whitespace from all received lines
+//Then it updates temp lines using while loop so that temp---
+//Only contain valid characters (0-9, N, S, E, W) for 2Dmap
+//Initializes the game->map structure if it's not already allocated and 
+//sets the (pre_start_line_num) to the current line number
 
-bool	validate_2dmap_line(char *current_line, int line_num, t_game *game)
+bool	allocate_2dmap_line(char *current_line, int line_num, t_game *game)
 {
 	int		i;
 	char	*temp;
@@ -44,8 +42,9 @@ bool	validate_2dmap_line(char *current_line, int line_num, t_game *game)
 		return (false);
 	while (temp[i] && (ft_isdigit(temp[i]) || is_player_dir(temp[i])))
 		i++;
-	if (ft_strlen(temp) == 0 || (!ft_isdigit(temp[i]) && temp[i] != '\0'))
-		return (free(temp), false);
+	if (temp[i] != '\0' && (ft_strlen(temp) == 0 || !ft_isdigit(temp[i])
+			|| !is_player_dir(temp[i])))
+		return (error_msg("invalid char in 2dmap\n"),free(temp), false);
 	if (!game->map)
 	{
 		game->map = ft_calloc(1, sizeof(t_map));
@@ -134,7 +133,10 @@ int	parse_file(char *file, t_game *game)
 	while (current_line != NULL)
 	{
 		if (is_2d_map_line(current_line) == true)
-			validate_2dmap_line(current_line, line_num, game);
+		{
+			if (allocate_2dmap_line(current_line, line_num, game) == false)
+				return (free(current_line), close(fd), -1);
+		}
 		if (validate_texture_line(current_line) == false
 			|| fill_info(game, current_line) != 0)
 			return (free(current_line), close(fd), -1);

@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/24 15:56:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/17 13:55:21 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/17 16:03:23 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void	skip_to_map_start(t_game *game, char *temp, int i, int fd)
 {
 	while (i++ < game->map->pre_start_line_num)
 	{
-		printf("%d\n", game->map->pre_start_line_num);
 		temp = get_next_line(fd);
 		if (!temp)
 			break ;
