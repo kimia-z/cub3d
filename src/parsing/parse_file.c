@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/18 14:08:56 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/19 13:56:58 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,6 @@ int	parse_file(char *file, t_game *game)
 		&& line_num > game->map->pre_start_line_num)
 		game->map->height = line_num - game->map->pre_start_line_num;
 	else
-		return (error_msg("2D map is missing\n"), close(fd), -1);
+		return (error_msg("map is missing\n"), close(fd), -1);
 	return (close(fd));
 }
