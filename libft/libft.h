@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/10/22 19:21:02 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/01/24 14:09:39 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/12 15:55:17 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int				ft_isalpha(int c);
 int				ft_isascii(int c);
 int				ft_isdigit(int c);
 int				ft_isprint(int c);
+int				ft_isspace(int c);
 
 void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t nmemb, size_t size);

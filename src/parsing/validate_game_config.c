@@ -6,16 +6,16 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 18:51:09 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/02/26 16:50:15 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/19 14:06:11 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-//is_config_full is checking if all variables in the t_game struct r set
+//is_struct_full is checking if all variables in the t_game struct r set
 //meaning (non-zero or non-NULL).
 
-int	is_config_full(t_game *game)
+int	is_struct_full(t_game *game)
 {
 	if (game->ceiling_color == 0)
 		return (error_msg("missing ceiling color\n"), false);
@@ -63,54 +63,49 @@ t_map	*copy_map(t_map *map)
 	return (temp_map->map2d[map->height] = NULL, temp_map);
 }
 
-//x and y are pointing to one cell
-//x and y begins with player's position and keeps iterating later
-//check if first row has 0, meaning broken wall
-//check if last row has 0,meaning broken wall
-//if row is  NULL or row's length == 0, return
-//stop recursion if cell is '1' or '2'
+//x and y are pointing to one cell-- play's position
+//begins with player's position and Recursively checks all four directions
+//If out of bounds, player is exposed
+//If space is encountered, I decide not okay
+//If it's a wall ('1') or already visited ('2'), stop
 //Mark the cell as visited with 2
 
-int	flood_fill(t_map *map, int r, int y, int x)
+int	flood_fill(t_map *map, int y, int x)
 {
-	if (map->map2d[0] && ft_strchr(map->map2d[0], '0'))
-		return (error_msg("broken wall at top"), 1);
-	if (map->map2d[map->height - 1]
-		&& ft_strchr(map->map2d[map->height - 1], '0'))
-		return (error_msg("broken wall at bottom"), 1);
-	if (!map->map2d[y] || ft_strlen(map->map2d[y]) == 0)
-		return (error_msg("empty row encountered"), 1);
-	if (map->map2d[y][x] && (map->map2d[y][x] == '1' \
-		|| map->map2d[y][x] == '2'))
+	if (y < 0 || y >= map->height
+		|| x < 0 || x >= (int)ft_strlen(map->map2d[y]))
+		return (error_msg("player not enclosed\n"), EXIT_FAILURE);
+	if (map->map2d[y][x] == ' ')
+		return (error_msg("space in playable area\n"), EXIT_FAILURE);
+	if (map->map2d[y][x] == '1' || map->map2d[y][x] == '2')
 		return (0);
-	if ((y > map->height || y < 0)
-		|| (x >= (int)ft_strlen(map->map2d[y]) || x < 0))
-		return (error_msg("out of bounds or broken wall\n"), 1);
-	if (map->map2d[y][x] != '1'
-		&& map->map2d[y][x] != '2' && map->map2d[y][x] != '0')
-		return (error_msg("unexpected value encountered\n"), 1);
 	map->map2d[y][x] = '2';
-	r += flood_fill(map, r, y, x + 1);
-	r += flood_fill(map, r, y, x - 1);
-	r += flood_fill(map, r, y + 1, x);
-	r += flood_fill(map, r, y - 1, x);
-	return (r);
+	if (flood_fill(map, y, x + 1) == EXIT_FAILURE
+		||flood_fill(map, y, x - 1) == EXIT_FAILURE
+		||flood_fill(map, y + 1, x) == EXIT_FAILURE
+		||flood_fill(map, y - 1, x) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (0);
 }
 
 bool	validate_game_config(char *map_file, t_game *game)
 {
 	t_map	*temp_map;
 
-	if (is_config_full(game) == false)
+	if (is_struct_full(game) == false)
 		return (error_msg("missing config info\n"), false);
 	if (validate_n_store_map2d(map_file, game) == false)
 		return (false);
 	if (parse_player(game) == false)
-		return (error_msg("Player not found"), false);
+		return (error_msg("invalid player\n"), false);
 	temp_map = copy_map(game->map);
 	temp_map->map2d[temp_map->player_y][temp_map->player_x] = '0';
-	if (flood_fill(temp_map, 0, temp_map->player_y, temp_map->player_x))
-		return (error_msg("Invalid map"), false);
+	if (flood_fill(temp_map, temp_map->player_y, temp_map->player_x))
+	{
+		free_array(temp_map->map2d);
+		free(temp_map);
+		return (false);
+	}
 	game->map->map2d[game->map->player_y][game->map->player_x] = '0';
 	free_array(temp_map->map2d);
 	free(temp_map);

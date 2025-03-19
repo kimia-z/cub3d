@@ -6,103 +6,115 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/02/26 17:16:40 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/19 14:05:05 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../cub3d.h"
 
-//the temp returns null or direction to game->no/so/ea/we
-//it is freed in clean.c
-
-char	*skip_space(char *str)
+static int	handle_invalid_line(char *temp)
 {
-	char	*temp;
+	if (temp[0] == 'F' || temp[0] == 'C' || temp[0] == 'N' || temp[0] == 'S'
+		|| temp[0] == 'W' || temp[0] == 'E'
+		|| (temp[0] == 'S' && temp[1] == 'O')
+		|| (temp[0] == 'N' && temp[1] == 'O')
+		|| (temp[0] == 'E' && temp[1] == 'A')
+		|| (temp[0] == 'W' && temp[1] == 'E'))
+		return (free(temp), 0);
+	else
+		return (error_msg("invalid chars in map"), free(temp), -1);
+}
+
+//fisrt it trims whitespace from all received lines
+//it skips temp lines that has
+//valid characters (0-9, N, S, E, W) for 2Dmap
+//handles invalid lines
+//sets the (pre_start_line_num) to the current line number
+
+int	allocate_2dmap_line(char *current_line, int line_num, t_game *game)
+{
 	int		i;
-	int		len;
+	char	*temp;
 
-	i = 2;
-	if (!str)
-		return (NULL);
-	if (str[i] != ' ' && str[i] != '\t')
-		return (NULL);
-	while (str[i] == ' ' || str[i] == '\t')
-		i++;
-	len = ft_strlen(&str[i]);
-	temp = malloc(sizeof(char) * len);
+	i = 0;
+	temp = ft_strtrim(current_line, "\n\t ");
 	if (!temp)
-		return (NULL);
-	ft_strlcpy(temp, &str[i], len);
-	return (temp);
+		return (-1);
+	while (temp[i] && (ft_isdigit(temp[i]) || is_player_dir(temp[i])
+			|| temp[i] == ' '))
+		i++;
+	if (temp[i] != '\0')
+		return (handle_invalid_line(temp));
+	if (ft_strlen(temp) == 0)
+		return (free(temp), 0);
+	if (!game->map)
+	{
+		game->map = ft_calloc(1, sizeof(t_map));
+		if (!game->map)
+			return (error_msg("Malloc fail for game->map"), -1);
+		game->map->pre_start_line_num = line_num;
+	}
+	return (free(temp), true);
 }
 
-/*
- * Ensures each texture is defined only once by checking if the corresponding 
- * texture pointer in t_game is NULL. If a texture is already set 
- * (i.e., not NULL), it triggers an error message to prevent overwriting 
- * previously assigned values, ensuring the integrity of the game configuration.
- */
-
-int	fill_texture(t_game *game, char *line)
+bool	is_texture_png(char *str)
 {
-	if (ft_strncmp(line, "NO", 2) == 0)
+	int	len;
+
+	if (!str)
+		return (false);
+	len = ft_strlen(str);
+	if (len < 4)
 	{
-		if (game->no != NULL)
-			return (error_msg("Duplicate texture definition: North"), 1);
-		game->no = skip_space(line);
+		error_msg("texture file invalid: filename too short\n");
+		return (false);
 	}
-	if (ft_strncmp(line, "WE", 2) == 0)
+	if (str && ft_strncmp(&str[len - 4], ".png", 4) != 0)
 	{
-		if (game->we != NULL)
-			return (error_msg("Duplicate texture definition: West"), 1);
-		game->we = skip_space(line);
+		error_msg("texture file invalid\n");
+		return (false);
 	}
-	else if (ft_strncmp(line, "SO", 2) == 0)
-	{
-		if (game->so != NULL)
-			return (error_msg("Duplicate texture definition: South"), 1);
-		game->so = skip_space(line);
-	}
-	else if (ft_strncmp(line, "EA", 2) == 0)
-	{
-		if (game->ea != NULL)
-			return (error_msg("Duplicate texture definition: East"), 1);
-		game->ea = skip_space(line);
-	}
-	return (0);
+	return (true);
 }
 
-int	fill_color(t_game *game, char *line)
-{
-	if (ft_strncmp(line, "F", 1) == 0)
-	{
-		if (game->floor_color != NULL)
-			return (error_msg("Duplicate color definition: floor\n"), 1);
-		game->floor_color = ft_strdup(line);
-	}
-	else if (ft_strncmp(line, "C", 1) == 0)
-	{
-		if (game->ceiling_color != NULL)
-			return (error_msg("Duplicate color definition; ceiling\n"), 1);
-		game->ceiling_color = ft_strdup(line);
-	}
-	return (0);
-}
+//if it is a texture line begins with identifier (SO/EA/NO/WE) we enter block
+//remove "trailing" newlines/tabs becuse for cases like .png\n
+////If we have nothing after identifier or if there is no space/tab after it
+//////exit
 
-int	fill_information(t_game *game, char *line)
+bool	validate_texture_line(char *line)
 {
-	if (fill_texture(game, line) != 0)
-		return (1);
-	if (fill_color(game, line) != 0)
-		return (1);
-	return (0);
+	int		i;
+	char	*temp;
+	char	*texture_path;
+
+	i = 0;
+	temp = NULL;
+	if ((ft_strncmp(line, "SO", 2) == 0 || ft_strncmp(line, "NO", 2) == 0
+			|| ft_strncmp(line, "WE", 2) == 0
+			|| ft_strncmp(line, "EA", 2) == 0))
+	{
+		temp = ft_strtrim(line, "\n\t ");
+		if (!temp)
+			return (error_msg("malloc failed for ft_strtrim\n"), false);
+		if (ft_strlen(temp) <= 2)
+			return (free(temp), error_msg("texture file not found\n"), false);
+		if (temp[2] != ' ' && temp[2] != '\t')
+			return (free(temp), error_msg("texture line misaligned\n"), false);
+		texture_path = ft_strtrim(temp + 2, "\n\t ");
+		if (!texture_path)
+			return (free(temp), false);
+		if (!is_texture_png(texture_path))
+			return (free(temp), free(texture_path), false);
+		free(texture_path);
+	}
+	return (free(temp), true);
 }
 // Opens the file and reads it line by line using get_next_line.
+// if we read a line (non-null)
+// process and allocate 2d map line if valid
 // Processes each line to fill game configuration game (textures, colors, etc.).
-// Identifies and processes map lines, initializing map game if required.
-// Ensures all lines are parsed before calculating the map's height.
-// get_next_line returns NULL at EOF, ensuring no partial height calculation.
-// Closes the file descriptor after processing all lines.
+// calculate height
 
 int	parse_file(char *file, t_game *game)
 {
@@ -115,18 +127,20 @@ int	parse_file(char *file, t_game *game)
 	if (fd == -1)
 		return (error_msg("cannot open file\n"), -1);
 	current_line = get_next_line(fd);
-	if (current_line == NULL)
-		return (error_msg("get_next_line failed\n"), -1);
 	while (current_line != NULL)
 	{
-		if (fill_information(game, current_line) != 0)
-			return (free(current_line), -1);
-		parse_map_line(current_line, line_num, game);
-		free(current_line);
+		if (allocate_2dmap_line(current_line, line_num, game) == -1)
+			return (free(current_line), close(fd), -1);
+		if (validate_texture_line(current_line) == false
+			|| assign_input(game, current_line) != 0)
+			return (free(current_line), close(fd), -1);
+		(free(current_line), current_line = get_next_line(fd));
 		line_num++;
-		current_line = get_next_line(fd);
 	}
-	if (game->map)
+	if (game->map && game->map->pre_start_line_num >= 0
+		&& line_num > game->map->pre_start_line_num)
 		game->map->height = line_num - game->map->pre_start_line_num;
+	else
+		return (error_msg("map is missing\n"), close(fd), -1);
 	return (close(fd));
 }

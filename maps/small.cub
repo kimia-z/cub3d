@@ -1,16 +1,14 @@
-SO ./textures/grass_south.png
+WE ./textures/wood_west.png   
+
+SO ./textures/grass_south.png	
 
 NO ./textures/stone_north.png
+C 25,100,222 
+EA ./textures/stone_north.png
+ 
+  
+F 255,100, 28   
 
-EA ./textures/brick_east.png
-
-WE ./textures/wood_west.png
-
-
-C 25,100,233
-
-F 255,100,15
-
-1111
-10N1
+1010
+1N01
 1111

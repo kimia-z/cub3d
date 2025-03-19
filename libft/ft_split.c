@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: rshaheen <rshaheen@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 15:36:10 by rshaheen          #+#    #+#             */
-/*   Updated: 2023/10/26 19:03:51 by rshaheen         ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   ft_split.c                                         :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/10/18 15:36:10 by rshaheen      #+#    #+#                 */
+/*   Updated: 2025/03/11 16:07:47 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,14 @@ static char	**extract_str(char const *s, size_t subs_num, char c, char **substr)
 	i = 0;
 	while (i < subs_num && *s)
 	{
+		if (*s == c && *(s + 1) == c)
+			return (free_array(i, substr), NULL);
 		while (*s == c)
 			s++;
 		len = len_substr(s, c);
 		substr[i] = (char *)malloc(sizeof(char ) * (len + 1));
 		if (!substr[i])
-		{
-			(free_array(i, substr));
-			return (NULL);
-		}
+			return (free_array(i, substr), NULL);
 		sub_i = 0;
 		while (sub_i < len)
 			substr[i][sub_i++] = *s++;

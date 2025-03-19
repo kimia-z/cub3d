@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/24 16:29:25 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/02/26 15:52:35 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/19 14:06:28 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ bool	parse_player(t_game *game)
 	int	row;
 	int	player_count;
 
-	row = 0;
+	row = -1;
 	player_count = 0;
 	game->height_keeper = 0;
 	while (game->map->map2d[++row])
@@ -81,7 +81,7 @@ bool	parse_player(t_game *game)
 		update_map_size(game, column);
 	}
 	if (player_count != 1)
-		return (false);
+		return (error_msg("player not found\n"), false);
 	game->map->height = game->height_keeper;
 	return (true);
 }

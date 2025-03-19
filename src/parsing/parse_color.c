@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parse_color.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: kziari <kziari@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/21 19:31:07 by rshaheen          #+#    #+#             */
-/*   Updated: 2025/02/27 15:24:05 by kziari           ###   ########.fr       */
+/*                                                        ::::::::            */
+/*   parse_color.c                                      :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2025/01/21 19:31:07 by rshaheen      #+#    #+#                 */
+/*   Updated: 2025/03/19 10:35:20 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ size_t	count_arr_elements(char **arr)
 	return (i);
 }
 
-//32-bit integer = game type.
+//32-bit integer is used for game
 //Decimal = number system
 //hexadecimal = number system
 
@@ -45,59 +45,63 @@ int	get_rgb(int r, int g, int b, int a)
 	return (r << 24 | g << 16 | b << 8 | a);
 }
 
-int	get_colors(t_game *game, char **color_num, char **line_elmn)
+int32_t	get_colors(char **color_num)
 {
 	int		i;
 	int		number;
 	int		arg[3];
 	int32_t	rgb;
+	int		j;
 
 	i = 0;
 	while (color_num[i])
 	{
+		j = 0;
+		while (color_num[i][j])
+		{
+			if (!ft_isdigit(color_num[i][j]) && (color_num[i][j] != ' ')
+			&& (color_num[i][j] != '\t'))
+				return (error_msg("Invalid characters in RGB values\n"), -1);
+			j++;
+		}
 		number = ft_atoi(color_num[i]);
 		if (number < 0 || number > 255)
-			return (error_msg("RGB values must be 0-255."), 1);
+			return (error_msg("RGB values must be 0-255."), -1);
 		arg[i] = number;
 		i++;
 	}
 	rgb = get_rgb(arg[0], arg[1], arg[2], 255);
-	if (!ft_strcmp(line_elmn[0], "F"))
-		game->texture->floor = rgb;
-	else if (!ft_strcmp(line_elmn[0], "C"))
-		game->texture->ceiling = rgb;
-	return (EXIT_SUCCESS);
+	return (rgb);
 }
 
 //parse_color receives one color line at a time from the map
-//replace tabs with spaces for simplification
-//split the string at space
-//must be only 2 elements in the array:
-//element one: (name of the 'to be painted' area i. e. floor or ceiling)
-//element 2: (the rgb values for colors)
+//strip the identifier (F/C), and white space and newlines
 //split rgb values at ','; must be 3 
 
-int	parse_color(t_game *game, char *color_line)
+int	parse_color(char *color_line)
 {
-	int		i;
-	char	**color_num;
-	char	**line_elmn;
+	char	**splitted_color_num;
+	char	*trimmed_line;
+	int32_t	rgb;
 
-	i = 0;
+	rgb = 0;
 	if (!color_line)
-		return (error_msg("missing color string"), 0);
-	while (color_line[i] == '\t')
-		color_line[i++] = ' ';
-	color_line[ft_strlen(color_line)] = '\0';
-	line_elmn = ft_split(color_line, ' ');
-	if (count_arr_elements(line_elmn) != 2)
-		return (free_array(line_elmn), error_msg("Invalid color format\n"), 0);
-	color_num = ft_split(line_elmn[1], ',');
-	if (count_arr_elements(color_num) != 3)
-		return (free_array(color_num), error_msg("Invalid color numbers\n"), 0);
-	if (!get_colors(game, color_num, line_elmn))
-		return (free_array(color_num), free_array(line_elmn), 1);
-	free_array(color_num);
-	free_array(line_elmn);
-	return (0);
+		return (error_msg("missing color string"), -1);
+	trimmed_line = ft_strtrim(color_line, "FC\n");
+	if (!trimmed_line)
+		return (error_msg("memory allocation for trim color failed\n"), -1);
+	splitted_color_num = ft_split(trimmed_line, ',');
+	if (!splitted_color_num)
+		return (error_msg("color line misconfiguration\n"), -1);
+	free (trimmed_line);
+	if (count_arr_elements(splitted_color_num) != 3)
+	{
+		error_msg("color line misconfiguration\n");
+		return (free_array(splitted_color_num), -1);
+	}
+	rgb = get_colors(splitted_color_num);
+	if (rgb == -1)
+		return (free_array(splitted_color_num), -1);
+	free_array(splitted_color_num);
+	return (rgb);
 }
