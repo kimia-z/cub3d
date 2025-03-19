@@ -12,24 +12,27 @@
 
 #include "../cub3d.h"
 
-//texture_path is freed in clean.c
-
 char	*allocate_texture_path(char *str)
 {
 	char	*texture_path;
-	int		i;
+	int		start;
+	int		end;
 	int		len;
 
-	i = 2;
 	if (!str)
 		return (NULL);
-	while (str[i] == ' ' || str[i] == '\t')
-		i++;
-	len = ft_strlen(&str[i]);
-	texture_path = malloc(sizeof(char) * len);
+	start = 2;
+	while (str[start] == ' ' || str[start] == '\t' || str[start] == '\n')
+		start++;
+	end = ft_strlen(str) - 1;
+	while (end >= start && (str[end] == ' '
+			|| str[end] == '\t' || str[end] == '\n'))
+		end--;
+	len = end - start + 1;
+	texture_path = malloc(sizeof(char) * (len + 1));
 	if (!texture_path)
 		return (NULL);
-	ft_strlcpy(texture_path, &str[i], len);
+	ft_strlcpy(texture_path, &str[start], len + 1);
 	return (texture_path);
 }
 
