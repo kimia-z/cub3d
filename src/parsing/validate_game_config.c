@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/21 18:51:09 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/19 11:31:35 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/19 14:06:11 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	flood_fill(t_map *map, int y, int x)
 {
 	if (y < 0 || y >= map->height
 		|| x < 0 || x >= (int)ft_strlen(map->map2d[y]))
-		return (error_msg("player not enclosed\n"), EXIT_FAILURE);  
+		return (error_msg("player not enclosed\n"), EXIT_FAILURE);
 	if (map->map2d[y][x] == ' ')
 		return (error_msg("space in playable area\n"), EXIT_FAILURE);
 	if (map->map2d[y][x] == '1' || map->map2d[y][x] == '2')

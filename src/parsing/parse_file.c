@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/19 13:56:58 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/19 14:05:05 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	handle_invalid_line(char *temp)
 //valid characters (0-9, N, S, E, W) for 2Dmap
 //handles invalid lines
 //sets the (pre_start_line_num) to the current line number
-
 
 int	allocate_2dmap_line(char *current_line, int line_num, t_game *game)
 {

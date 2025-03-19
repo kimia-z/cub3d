@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/24 16:29:25 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/17 12:33:33 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/19 14:06:28 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,4 +85,3 @@ bool	parse_player(t_game *game)
 	game->map->height = game->height_keeper;
 	return (true);
 }
-
