@@ -6,7 +6,7 @@
 #    By: rshaheen <rshaheen@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2025/01/15 12:10:13 by rshaheen      #+#    #+#                  #
-#    Updated: 2025/03/18 11:12:37 by rshaheen      ########   odam.nl          #
+#    Updated: 2025/03/25 07:38:27 by rshaheen      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,9 +44,6 @@ SOURCE = src/main.c\
 			src/execution/utils.c
 
 OBJECTS = $(SOURCE:%.c=$(OBJ_DIR)/%.o)
-
-info-%:
-		$(info $($*))
 
 all: $(LIBMLX) $(MLXLIB) $(NAME)
 

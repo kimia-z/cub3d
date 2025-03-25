@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/19 14:05:05 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/25 08:33:39 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,14 @@ int	allocate_2dmap_line(char *current_line, int line_num, t_game *game)
 bool	is_texture_png(char *str)
 {
 	int	len;
+	int	fd;
 
 	if (!str)
 		return (false);
+	fd = open(str, O_RDONLY);
+	if (fd == -1)
+		return (error_msg("cannot open texture file\n"), false);
+	close (fd);
 	len = ft_strlen(str);
 	if (len < 4)
 	{
@@ -130,10 +135,10 @@ int	parse_file(char *file, t_game *game)
 	while (current_line != NULL)
 	{
 		if (allocate_2dmap_line(current_line, line_num, game) == -1)
-			return (free(current_line), close(fd), -1);
+			return (gnl_cleanup(fd), free(current_line), close(fd), -1);
 		if (validate_texture_line(current_line) == false
 			|| assign_input(game, current_line) != 0)
-			return (free(current_line), close(fd), -1);
+			return (gnl_cleanup(fd), free(current_line), close(fd), -1);
 		(free(current_line), current_line = get_next_line(fd));
 		line_num++;
 	}
@@ -141,6 +146,7 @@ int	parse_file(char *file, t_game *game)
 		&& line_num > game->map->pre_start_line_num)
 		game->map->height = line_num - game->map->pre_start_line_num;
 	else
-		return (error_msg("map is missing\n"), close(fd), -1);
+		return (gnl_cleanup(fd), error_msg("map is missing\n"), close(fd), -1);
 	return (close(fd));
 }
+
