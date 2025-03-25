@@ -5,7 +5,7 @@ NO ./textures/stone_north.png
 
 EA ./textures/brick_east.png
 
-WE ./path_to_the_west_texture
+WE ./path_to_the_west_texture.png
 
 
 

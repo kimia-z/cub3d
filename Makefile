@@ -6,11 +6,11 @@
 #    By: rshaheen <rshaheen@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2025/01/15 12:10:13 by rshaheen      #+#    #+#                  #
-#    Updated: 2025/03/18 11:12:37 by rshaheen      ########   odam.nl          #
+#    Updated: 2025/03/25 12:59:37 by rshaheen      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub3d
+NAME = cub3D
 
 LIBFT = ./libft/libft.a
 
@@ -33,6 +33,7 @@ SOURCE = src/main.c\
 			src/parsing/parse_color.c\
 			src/parsing/parse_player.c\
 			src/parsing/parse_file.c\
+			src/parsing/validate_map_line.c\
 			src/parsing/parse_texture_color.c\
 			src/parsing/validate_game_config.c\
 			src/parsing/validate_store_map2d.c\
@@ -44,9 +45,6 @@ SOURCE = src/main.c\
 			src/execution/utils.c
 
 OBJECTS = $(SOURCE:%.c=$(OBJ_DIR)/%.o)
-
-info-%:
-		$(info $($*))
 
 all: $(LIBMLX) $(MLXLIB) $(NAME)
 

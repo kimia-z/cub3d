@@ -3,12 +3,15 @@ WE ./textures/wood_west.png
 SO ./textures/grass_south.png	
 
 NO ./textures/stone_north.png
-C 25,100,222 
+
 EA ./textures/stone_north.png
  
-  
-F 255,100, 28   
+ 
+F 255,255,255
+C 0, 0, 0   
+		
 
 1110
 1N01
-1111
+1101
+0110
