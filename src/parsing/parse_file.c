@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/25 13:00:11 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/25 13:08:04 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	process_line(char *line, t_game *game, int line_num, int *flag)
 	return (*flag);
 }
 
-static int	validate_map_presence(t_game *game, int line_num)
+static int	calculate_height(t_game *game, int line_num)
 {
 	if (game->map && game->map->pre_start_line_num >= 0
 		&& line_num > game->map->pre_start_line_num)
@@ -118,5 +118,5 @@ int	parse_file(char *file, t_game *game)
 	}
 	if (flag != 0)
 		return (close(fd), -1);
-	return (validate_map_presence(game, line_num), close(fd));
+	return (calculate_height(game, line_num), close(fd));
 }
