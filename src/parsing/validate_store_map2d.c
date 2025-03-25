@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/24 15:56:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/25 12:34:03 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/25 13:52:00 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,11 @@ static bool	allocate_map2d(t_game *game)
 	return (true);
 }
 
-static bool	process_map_lines(t_game *game, int fd)
+bool	process_map_lines(int fd, t_game *game, int *i)
 {
 	char	*temp;
-	int		i;
 	int		flag;
 
-	i = 0;
 	flag = 0;
 	while (1)
 	{
@@ -63,27 +61,65 @@ static bool	process_map_lines(t_game *game, int fd)
 			break ;
 		if (is_valid_char(temp))
 			flag = -2;
-		game->map->map2d[i++] = ft_strtrim(temp, "\n");
+		game->map->map2d[*i] = ft_strtrim(temp, "\n");
 		free(temp);
+		(*i)++;
 	}
 	if (flag != 0)
 		return (error_msg("invalid char"), false);
 	return (true);
 }
 
+// Refactored validate_n_store_map2d function
 bool	validate_n_store_map2d(char *map_file, t_game *game)
 {
-	int		fd;
-	int		i;
-	char	*temp;
+	int	fd;
+	int	i;
 
 	i = 0;
 	fd = open(map_file, O_RDONLY);
 	if (fd == -1)
 		return (error_msg("cannot open file\n"), false);
-	temp = NULL;
-	skip_to_map_start(game, temp, i, fd);
+	skip_to_map_start(game, NULL, i, fd);
 	if (allocate_map2d(game) == false)
 		return (false);
-	return (process_map_lines(game, fd));
+	if (!process_map_lines(fd, game, &i))
+	{
+		close(fd);
+		return (false);
+	}
+	close(fd);
+	return (true);
 }
+
+// bool	validate_n_store_map2d(char *map_file, t_game *game)
+// {
+// 	int		fd;
+// 	int		i;
+// 	char	*temp;
+// 	int		flag;
+
+// 	i = 0;
+// 	flag = 0;
+// 	fd = open(map_file, O_RDONLY);
+// 	if (fd == -1)
+// 		return (error_msg("cannot open file\n"), false);
+// 	temp = NULL;
+// 	skip_to_map_start(game, temp, i, fd);
+// 	i = 0;
+// 	if (allocate_map2d(game) == false)
+// 		return (false);
+// 	while (1)
+// 	{
+// 		temp = get_next_line(fd);
+// 		if (!temp)
+// 			break ;
+// 		if (is_valid_char(temp))
+// 			flag = -2;
+// 		game->map->map2d[i++] = ft_strtrim(temp, "\n");
+// 		free(temp);
+// 	}
+// 	if (flag != 0)
+// 		return (error_msg("invalid char"), false);
+// 	return (true);
+// }

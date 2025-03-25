@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/25 13:08:04 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/25 13:56:41 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +85,6 @@ static int	process_line(char *line, t_game *game, int line_num, int *flag)
 	return (*flag);
 }
 
-static int	calculate_height(t_game *game, int line_num)
-{
-	if (game->map && game->map->pre_start_line_num >= 0
-		&& line_num > game->map->pre_start_line_num)
-	{
-		game->map->height = line_num - game->map->pre_start_line_num;
-		return (0);
-	}
-	return (error_msg("map is missing\n"), -1);
-}
-
 int	parse_file(char *file, t_game *game)
 {
 	char	*current_line;
@@ -112,11 +101,15 @@ int	parse_file(char *file, t_game *game)
 	while (current_line != NULL)
 	{
 		process_line(current_line, game, line_num, &flag);
-		free(current_line);
-		current_line = get_next_line(fd);
+		(free(current_line), current_line = get_next_line(fd));
 		line_num++;
 	}
 	if (flag != 0)
 		return (close(fd), -1);
-	return (calculate_height(game, line_num), close(fd));
+	if (game->map && game->map->pre_start_line_num >= 0
+		&& line_num > game->map->pre_start_line_num)
+		game->map->height = line_num - game->map->pre_start_line_num;
+	else
+		return (error_msg("map is missing\n"), -1);
+	return (close(fd));
 }
