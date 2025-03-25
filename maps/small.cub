@@ -7,8 +7,8 @@ NO ./textures/stone_north.png
 EA ./textures/stone_north.png
  
   
-F 255,100, 28 
-C 25,100,222   
+F 255,255,255
+C 0, 0, 0      		
 
 1110
 1N01
