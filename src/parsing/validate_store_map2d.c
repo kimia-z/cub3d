@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/24 15:56:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/25 08:44:43 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/25 12:34:03 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,29 @@ static bool	allocate_map2d(t_game *game)
 	return (true);
 }
 
+static bool	process_map_lines(t_game *game, int fd)
+{
+	char	*temp;
+	int		i;
+	int		flag;
+
+	i = 0;
+	flag = 0;
+	while (1)
+	{
+		temp = get_next_line(fd);
+		if (!temp)
+			break ;
+		if (is_valid_char(temp))
+			flag = -2;
+		game->map->map2d[i++] = ft_strtrim(temp, "\n");
+		free(temp);
+	}
+	if (flag != 0)
+		return (error_msg("invalid char"), false);
+	return (true);
+}
+
 bool	validate_n_store_map2d(char *map_file, t_game *game)
 {
 	int		fd;
@@ -60,19 +83,7 @@ bool	validate_n_store_map2d(char *map_file, t_game *game)
 		return (error_msg("cannot open file\n"), false);
 	temp = NULL;
 	skip_to_map_start(game, temp, i, fd);
-	i = 0;
 	if (allocate_map2d(game) == false)
 		return (false);
-	while (1)
-	{
-		temp = get_next_line(fd);
-		if (!temp)
-			break ;
-		if (is_valid_char(temp))
-			return (gnl_free(fd), error_msg("invalid char"), free(temp), false);
-		game->map->map2d[i++] = ft_strtrim(temp, "\n");
-		free(temp);
-	}
-	free(temp);
-	return (true);
+	return (process_map_lines(game, fd));
 }

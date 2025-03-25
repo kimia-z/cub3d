@@ -3,9 +3,9 @@ SO ./path_to_the_south_texture
 
 NO ./textures/stone_north.png
 
-EA ./path_to_the_east_texture
+EA ./textures/stone_north.png
 
-WE ./path_to_the_west_texture
+WE ./textures/stone_north.png
 
 
 
