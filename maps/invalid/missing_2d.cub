@@ -1,0 +1,12 @@
+SO ./textures/Purple.png
+
+NO ./textures/Green.png
+
+EA ./textures/Blue.png
+
+WE ./textures/Gray.png
+
+
+C 203,238,243
+
+F 244,156,187
