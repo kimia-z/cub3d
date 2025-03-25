@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 11:54:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/25 10:25:16 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/25 11:13:45 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include "../libft/libft.h"
 # include <stdbool.h>
 # include <math.h>
-# define WIDTH 800 //?
-# define HEIGHT 600 //?
+# define WIDTH 800
+# define HEIGHT 600
 # define HITBOX 0.2
 # define X 0
 # define Y 1
@@ -145,9 +145,6 @@ void			clean_texture(t_texture *texture);
 void			clean_all(t_game *game);
 void			free_array(char **array);
 void			clean_game(t_game *game);
-
-//debugging
-void			print_my_map(t_map *map);
 
 /* Init */
 bool			init_all(t_game *game);

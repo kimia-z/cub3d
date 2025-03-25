@@ -1,13 +1,13 @@
-WE ./textures/wood_west.p
+WE ./textures/wood_west.png
 
 SO ./textures/grass_south.png
 
-NO ./textures/stone_north.abc
+NO ./textures/stone_north.png
 
 EA ./textures/brick_east.png
 
 
-C 25,100,233
+C 25,100,233,
 
 F 255,100,15
 
