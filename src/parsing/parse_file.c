@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/25 10:26:41 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/25 11:15:39 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,4 +149,3 @@ int	parse_file(char *file, t_game *game)
 		return (gnl_free(fd), error_msg("map is missing\n"), close(fd), -1);
 	return (close(fd));
 }
-
