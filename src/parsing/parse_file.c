@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/20 15:06:44 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/25 08:33:39 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/25 08:44:26 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,10 @@ int	parse_file(char *file, t_game *game)
 	while (current_line != NULL)
 	{
 		if (allocate_2dmap_line(current_line, line_num, game) == -1)
-			return (gnl_cleanup(fd), free(current_line), close(fd), -1);
+			return (gnl_free(fd), free(current_line), close(fd), -1);
 		if (validate_texture_line(current_line) == false
 			|| assign_input(game, current_line) != 0)
-			return (gnl_cleanup(fd), free(current_line), close(fd), -1);
+			return (gnl_free(fd), free(current_line), close(fd), -1);
 		(free(current_line), current_line = get_next_line(fd));
 		line_num++;
 	}
@@ -146,7 +146,7 @@ int	parse_file(char *file, t_game *game)
 		&& line_num > game->map->pre_start_line_num)
 		game->map->height = line_num - game->map->pre_start_line_num;
 	else
-		return (gnl_cleanup(fd), error_msg("map is missing\n"), close(fd), -1);
+		return (gnl_free(fd), error_msg("map is missing\n"), close(fd), -1);
 	return (close(fd));
 }
 

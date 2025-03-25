@@ -6,11 +6,11 @@
 #    By: rshaheen <rshaheen@student.42.fr>            +#+                      #
 #                                                    +#+                       #
 #    Created: 2025/01/15 12:10:13 by rshaheen      #+#    #+#                  #
-#    Updated: 2025/03/25 07:38:27 by rshaheen      ########   odam.nl          #
+#    Updated: 2025/03/25 08:45:54 by rshaheen      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub3d
+NAME = cub3D
 
 LIBFT = ./libft/libft.a
 

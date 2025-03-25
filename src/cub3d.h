@@ -6,7 +6,7 @@
 /*   By: rshaheen <rshaheen@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2025/01/15 11:54:45 by rshaheen      #+#    #+#                 */
-/*   Updated: 2025/03/25 08:26:50 by rshaheen      ########   odam.nl         */
+/*   Updated: 2025/03/25 08:44:26 by rshaheen      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int				get_rgb(int r, int g, int b, int a);
 void			error_msg(char *message);
 
 /* Clean */
-void			gnl_cleanup(int fd);
+void			gnl_free(int fd);
 void			clean_texture(t_texture *texture);
 void			clean_all(t_game *game);
 void			free_array(char **array);
